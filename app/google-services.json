@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1084936980874",
+    "firebase_url": "https://tethertime-cc5dc-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "tethertime-cc5dc",
+    "storage_bucket": "tethertime-cc5dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084936980874:android:8ff50730defbef0c9ae073",
+        "android_client_info": {
+          "package_name": "com.example.opsc_part3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeJaDjpSFLarzxBARWuV95TLvzPJjILgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
