@@ -3,6 +3,8 @@ package com.example.opsc_part3
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,11 +20,29 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        var username : EditText = findViewById(R.id.txtUsername)
+        var password : EditText = findViewById(R.id.txtPassword)
         var btnlogin : Button = findViewById(R.id.btnLogin)
+        var btnreg : Button = findViewById(R.id.btnRegister)
 
         btnlogin.setOnClickListener()
         {
-            val int = Intent(this, Home::class.java)
+
+            if((username.text.toString().equals(null)) || (password.text.toString().equals(null)))
+            {
+                Toast.makeText(this, "Enter all fields!", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                val int = Intent(this, Home::class.java)
+                startActivity(int)
+            }
+
+        }
+
+        btnreg.setOnClickListener()
+        {
+            val int = Intent(this, Register::class.java)
             startActivity(int)
         }
     }
