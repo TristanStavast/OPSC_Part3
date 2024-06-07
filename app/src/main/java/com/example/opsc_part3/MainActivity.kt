@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         btnlogin.setOnClickListener()
         {
 
-            if((username.text.toString().equals(null)) || (password.text.toString().equals(null)))
+            if((username.text.toString().isEmpty()) || (password.text.toString().isEmpty()))
             {
                 Toast.makeText(this, "Enter all fields!", Toast.LENGTH_SHORT).show()
             }
