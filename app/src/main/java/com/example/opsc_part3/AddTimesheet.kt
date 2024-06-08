@@ -22,6 +22,8 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.view.WindowManager
 import android.widget.TextView
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import java.io.InputStream
 import java.util.Calendar
 
@@ -32,6 +34,11 @@ class AddTimesheet : AppCompatActivity() {
 
     private lateinit var startDate : EditText
     private lateinit var endDate : EditText
+
+    companion object
+    {
+        val db = Firebase.database
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,10 +94,6 @@ class AddTimesheet : AppCompatActivity() {
             showDatePickerDialog(endDate)
         }
 
-        val btnaddtimes : Button = findViewById(R.id.btnAddTimes)
-        val txtname : EditText = findViewById(R.id.txtAddTimeName)
-        val txtdesc : EditText = findViewById(R.id.txtTimeDescription)
-
         btnImage = findViewById(R.id.ibtnAddImage)
         btnImage.setOnClickListener()
         {
@@ -98,9 +101,35 @@ class AddTimesheet : AppCompatActivity() {
             startActivityForResult(intent, PICK_IMAGE)
         }
 
+        val btnaddtimes : Button = findViewById(R.id.btnAddTimes)
+
         btnaddtimes.setOnClickListener()
         {
-            
+            val name : EditText = findViewById(R.id.txtAddTimeName)
+            val desc : EditText = findViewById(R.id.txtTimeDescription)
+
+            if ((name.text.equals("")) || (startDate.text.equals("")) || (endDate.text.equals("")) || (desc.text.equals("")))
+            {
+                name.setError("Please enter all fields!")
+                startDate.setError("Please enter all fields!")
+                endDate.setError("Please enter all fields!")
+                desc.setError("Please enter all fields!")
+            }
+            else
+            {
+                val ref = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Username")
+                ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
+                val ref2 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/TimesheetName")
+                ref2.setValue(name.text.toString())
+                val ref3 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/StartDate")
+                ref3.setValue(startDate.text.toString())
+                val ref4 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/EndDate")
+                ref4.setValue(endDate.text.toString())
+                val ref5 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/TotalTime")
+                ref5.setValue("4h32m")
+                val ref6 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Description")
+                ref6.setValue(desc.text.toString())
+            }
         }
 
     }

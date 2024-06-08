@@ -23,11 +23,13 @@ import com.google.firebase.database.getValue
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var database: DatabaseReference
+    private lateinit var ref1: DatabaseReference
+    private lateinit var ref2: DatabaseReference
 
     companion object
     {
         val userList = mutableListOf<Users>()
+        val arrTimeSheet = mutableListOf<TimesheetData>()
         var SignedIn : Int = -1
     }
 
@@ -45,13 +47,14 @@ class MainActivity : AppCompatActivity() {
 
         SignedIn = -1
 
-        database = FirebaseDatabase.getInstance().getReference("Users")
+        ref1 = FirebaseDatabase.getInstance().getReference("Users")
+        ref2 = FirebaseDatabase.getInstance().getReference("Timesheet")
         readDataFromFirebase()
 
     }
 
     private fun readDataFromFirebase() {
-        database.addValueEventListener(object : ValueEventListener {
+        ref1.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
                 for (userSnapshot in snapshot.children) {
@@ -62,14 +65,37 @@ class MainActivity : AppCompatActivity() {
                         userList.add(user)
                     }
                 }
-
-                MainCode(userList)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 //
             }
         })
+
+        ref2.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                arrTimeSheet.clear()
+                for (timeSnapshot in snapshot.children) {
+                    val username = timeSnapshot.child("Username").getValue(String::class.java)
+                    val tsname = timeSnapshot.child("TimesheetName").getValue(String::class.java)
+                    val sdate = timeSnapshot.child("StartDate").getValue(String::class.java)
+                    val edate = timeSnapshot.child("EndDate").getValue(String::class.java)
+                    val totaltime = timeSnapshot.child("TotalTime").getValue(String::class.java)
+                    val description = timeSnapshot.child("Description").getValue(String::class.java)
+                    if (username != null && tsname != null && sdate != null && edate != null && totaltime != null && description != null) {
+                        val ts = TimesheetData(username, tsname, sdate, edate, totaltime, description)
+                        arrTimeSheet.add(ts)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
+
+        })
+
+        MainCode(userList)
     }
 
     private fun MainCode(users: List<Users>) {
