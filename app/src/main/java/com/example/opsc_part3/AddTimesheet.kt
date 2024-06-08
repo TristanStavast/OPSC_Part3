@@ -15,17 +15,23 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.WindowManager
+import android.widget.TextView
 import java.io.InputStream
+import java.util.Calendar
 
 class AddTimesheet : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
+
+    private lateinit var startDate : EditText
+    private lateinit var endDate : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +77,16 @@ class AddTimesheet : AppCompatActivity() {
 
         // Main Code
 
+        startDate = findViewById(R.id.txtStartDate)
+        endDate = findViewById(R.id.txtEndDate)
+
+        startDate.setOnClickListener {
+            showDatePickerDialog(startDate)
+        }
+        endDate.setOnClickListener {
+            showDatePickerDialog(endDate)
+        }
+
         val btnaddtimes : Button = findViewById(R.id.btnAddTimes)
         val txtname : EditText = findViewById(R.id.txtAddTimeName)
         val txtdesc : EditText = findViewById(R.id.txtTimeDescription)
@@ -106,6 +122,20 @@ class AddTimesheet : AppCompatActivity() {
 
         }
         return true
+    }
+
+    private fun showDatePickerDialog(txt: EditText) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+            txt.setText("$selectedDate")
+        }, year, month, day)
+
+        datePickerDialog.show()
     }
 
     override fun onBackPressed() {
