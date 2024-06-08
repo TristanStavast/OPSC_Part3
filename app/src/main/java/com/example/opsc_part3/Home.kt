@@ -1,5 +1,6 @@
 package com.example.opsc_part3
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
@@ -20,6 +21,8 @@ class Home : AppCompatActivity() {
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
 
+
+
         val openDrawer : ImageButton = findViewById(R.id.btnNav)
         openDrawer.setOnClickListener()
         {
@@ -30,11 +33,14 @@ class Home : AppCompatActivity() {
 
         //Intents
         navView.setNavigationItemSelectedListener {
+            val timeint = Intent(this, TimesheetList::class.java)
+
+
             when(it.itemId){
                 R.id.nav_home -> Toast.makeText(applicationContext, "Clicked Home", Toast.LENGTH_SHORT).show()
                 R.id.nav_settings -> Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
                 R.id.nav_report -> Toast.makeText(applicationContext, "Clicked Report", Toast.LENGTH_SHORT).show()
-                R.id.nav_timesheet -> Toast.makeText(applicationContext, "Clicked Timesheet", Toast.LENGTH_SHORT).show()
+                R.id.nav_timesheet -> startActivity(timeint)
                 R.id.nav_categories -> Toast.makeText(applicationContext, "Clicked Categories", Toast.LENGTH_SHORT).show()
                 R.id.nav_profile -> Toast.makeText(applicationContext, "Clicked Profile", Toast.LENGTH_SHORT).show()
                 R.id.nav_logout -> Toast.makeText(applicationContext, "Clicked Logout", Toast.LENGTH_SHORT).show()

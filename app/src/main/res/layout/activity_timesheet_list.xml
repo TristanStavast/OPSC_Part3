@@ -43,9 +43,31 @@
         android:id="@+id/btnAddTimesheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add timesheet"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="636dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="637dp"
+        android:layout_marginEnd="216dp"
+        android:layout_marginBottom="46dp"
         android:backgroundTint="#3C9A14"
-        android:textColor="@color/black"/>
+        android:text="Add timesheet"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="635dp"
+        android:layout_marginEnd="71dp"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="#3C9A14"
+        android:text="Timer"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
