@@ -2,6 +2,7 @@ package com.example.opsc_part3
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -21,13 +22,14 @@ class Register : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        // Make the activity fullscreen
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
         setContentView(R.layout.activity_register)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         //Registration button on register page
         var btnReg : Button = findViewById(R.id.btnReg)
@@ -53,6 +55,13 @@ class Register : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
+        }
+
+        var btnLogin : Button = findViewById(R.id.btnNavLogin)
+        btnLogin.setOnClickListener()
+        {
+            val int = Intent(this, MainActivity::class.java)
+            startActivity(int)
         }
     }
 }

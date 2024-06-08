@@ -3,6 +3,7 @@ package com.example.opsc_part3
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -16,12 +17,17 @@ class Home : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Make the activity fullscreen
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
         setContentView(R.layout.activity_home)
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
-
-
 
         val openDrawer : ImageButton = findViewById(R.id.btnNav)
         openDrawer.setOnClickListener()
@@ -37,7 +43,6 @@ class Home : AppCompatActivity() {
 
 
             when(it.itemId){
-                R.id.nav_home -> Toast.makeText(applicationContext, "Clicked Home", Toast.LENGTH_SHORT).show()
                 R.id.nav_settings -> Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
                 R.id.nav_report -> Toast.makeText(applicationContext, "Clicked Report", Toast.LENGTH_SHORT).show()
                 R.id.nav_timesheet -> startActivity(timeint)
