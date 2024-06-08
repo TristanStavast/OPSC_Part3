@@ -22,14 +22,12 @@ import com.google.firebase.database.getValue
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var rootNode : FirebaseDatabase
-    private lateinit var userReference: DatabaseReference
+    private lateinit var database: DatabaseReference
 
     companion object
     {
-        var arrUsers = ArrayList<Users>()
+        val userList = mutableListOf<Users>()
         var SignedIn : Int = 0
-        var numUsers : Int = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,30 +40,34 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        rootNode = FirebaseDatabase.getInstance()
-        userReference = rootNode.getReference("Users")
+        database = FirebaseDatabase.getInstance().getReference("Users")
+        readDataFromFirebase()
 
-        userReference.addValueEventListener(object : ValueEventListener
-        {
+    }
+
+    private fun readDataFromFirebase() {
+        database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (snapshot in snapshot.children)
-                {
-                    val dc = snapshot.getValue(Users::class.java)
-                    arrUsers.add(Users("${dc?.username}", "${dc?.password}"))
+                userList.clear()
+                for (userSnapshot in snapshot.children) {
+                    val username = userSnapshot.child("Username").getValue(String::class.java)
+                    val password = userSnapshot.child("Password").getValue(String::class.java)
+                    if (username != null && password != null) {
+                        val user = Users(username, password)
+                        userList.add(user)
+                    }
                 }
+
+                MainCode(userList)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 //
             }
         })
+    }
 
-        arrUsers.add(Users("test1", "test2"))
-        arrUsers.add(Users("test3", "test4"))
-        for (user in arrUsers)
-        {
-            Log.d("test", user.username + " " + user.password)
-        }
+    private fun MainCode(users: List<Users>) {
 
         var btnlogin : Button = findViewById(R.id.btnLogin)
         var btnreg : Button = findViewById(R.id.btnRegister)
@@ -79,18 +81,18 @@ class MainActivity : AppCompatActivity() {
             var found = false
             SignedIn = -1
 
-            for(i in 0 until arrUsers.size)
+            for(i in 0 until users.size)
             {
                 //error handling
-                if((username.text.toString().equals(arrUsers[i].username)) && (password.text.toString().equals(arrUsers[i].password)))
+                if((username.text.toString().equals(users[i].username)) && (password.text.toString().equals(users[i].password)))
                 {
                     Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_SHORT).show()
 
                     found = true
 
+                    SignedIn = i
                     val int = Intent(this, Home::class.java)
                     startActivity(int)
-                    SignedIn = i
                     break
                 }
             }
