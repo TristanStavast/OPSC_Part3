@@ -21,13 +21,16 @@ import android.provider.MediaStore
 import android.view.WindowManager
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
+import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.Calendar
+import android.util.Base64
 
 class AddTimesheet : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
+    private var imgString: String = ""
 
     private lateinit var txtDate : EditText
     private lateinit var startTime : EditText
@@ -130,10 +133,15 @@ class AddTimesheet : AppCompatActivity() {
                 ref4.setValue(startTime.text.toString())
                 val ref5 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/EndTime")
                 ref5.setValue(endTime.text.toString())
+
+                val totalTime = calculateTotalTime(startTime.text.toString(), endTime.text.toString())
                 val ref6 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/TotalTime")
-                ref6.setValue("4h32m")
+                ref6.setValue(totalTime)
+
                 val ref7 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Description")
                 ref7.setValue(desc.text.toString())
+                val ref8 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Image")
+                ref8.setValue(imgString)
             }
         }
 
@@ -147,6 +155,11 @@ class AddTimesheet : AppCompatActivity() {
                 val imageStream: InputStream? = contentResolver.openInputStream(selectedImage)
                 val bitmap: Bitmap = BitmapFactory.decodeStream(imageStream)
                 btnImage.setImageBitmap(bitmap)
+
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                val byteArray = byteArrayOutputStream.toByteArray()
+                imgString = Base64.encodeToString(byteArray, Base64.DEFAULT)
             }
         }
     }
@@ -183,6 +196,28 @@ class AddTimesheet : AppCompatActivity() {
         }, hour, minute, true)
 
         timePickerDialog.show()
+    }
+
+    private fun calculateTotalTime(startTime: String, endTime: String): String {
+        val startTimeParts = startTime.split(":")
+        val endTimeParts = endTime.split(":")
+
+        val startHour = startTimeParts[0].toInt()
+        val startMinute = startTimeParts[1].toInt()
+
+        val endHour = endTimeParts[0].toInt()
+        val endMinute = endTimeParts[1].toInt()
+
+        var totalMinutes = (endHour * 60 + endMinute) - (startHour * 60 + startMinute)
+
+        if (totalMinutes < 0) {
+            totalMinutes += 24 * 60
+        }
+
+        val hours = totalMinutes / 60
+        val minutes = totalMinutes % 60
+
+        return "$hours h $minutes m"
     }
 
     override fun onBackPressed() {

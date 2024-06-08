@@ -7,6 +7,7 @@ data class TimesheetData (
     val sTime : String? = null,
     val eTime : String? = null,
     val totalTime : String? = null,
-    val description : String? = null
+    val description : String? = null,
+    val image : String? = null
 ) {
 }

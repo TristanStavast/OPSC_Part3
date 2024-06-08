@@ -83,8 +83,9 @@ class MainActivity : AppCompatActivity() {
                     val etime = timeSnapshot.child("EndTime").getValue(String::class.java)
                     val totaltime = timeSnapshot.child("TotalTime").getValue(String::class.java)
                     val description = timeSnapshot.child("Description").getValue(String::class.java)
+                    val img = timeSnapshot.child("Image").getValue(String::class.java)
                     if (username != null && tsname != null && date != null && stime != null && etime != null && totaltime != null && description != null) {
-                        val ts = TimesheetData(username, tsname, date, stime, etime, totaltime, description)
+                        val ts = TimesheetData(username, tsname, date, stime, etime, totaltime, description, img)
                         arrTimeSheet.add(ts)
                     }
                 }
