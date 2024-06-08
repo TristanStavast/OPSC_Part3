@@ -2,6 +2,8 @@ package com.example.opsc_part3
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,11 +20,13 @@ class Home : AppCompatActivity() {
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val openDrawer : ImageButton = findViewById(R.id.btnNav)
+        openDrawer.setOnClickListener()
+        {
+            if (!drawerLayout.isDrawerOpen(navView)) {
+                drawerLayout.openDrawer(navView)
+            }
+        }
 
         navView.setNavigationItemSelectedListener {
             when(it.itemId){

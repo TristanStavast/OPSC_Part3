@@ -25,6 +25,14 @@
             app:layout_constraintHorizontal_bias="0.5">
         </TextView>
 
+        <ImageButton
+            android:id="@+id/btnNav"
+            android:layout_width="63dp"
+            android:layout_height="56dp"
+            app:srcCompat="@drawable/baseline_settings_24"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

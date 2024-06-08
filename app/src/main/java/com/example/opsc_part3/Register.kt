@@ -44,7 +44,6 @@ class Register : AppCompatActivity() {
 
                 MainActivity.userList.add(Users(uname.text.toString(), pass.text.toString()))
 
-
                 val ref = db.getReference("Users/" + MainActivity.userList.size + "/Username")
                 ref.setValue(uname.text.toString())
                 val ref2 = db.getReference("Users/" + MainActivity.userList.size + "/Password")
