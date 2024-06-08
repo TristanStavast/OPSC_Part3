@@ -7,21 +7,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.WindowManager
-import android.widget.TextView
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
 import java.io.InputStream
@@ -32,8 +29,9 @@ class AddTimesheet : AppCompatActivity() {
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
 
-    private lateinit var startDate : EditText
-    private lateinit var endDate : EditText
+    private lateinit var txtDate : EditText
+    private lateinit var startTime : EditText
+    private lateinit var endTime : EditText
 
     companion object
     {
@@ -84,14 +82,18 @@ class AddTimesheet : AppCompatActivity() {
 
         // Main Code
 
-        startDate = findViewById(R.id.txtStartDate)
-        endDate = findViewById(R.id.txtEndDate)
+        txtDate = findViewById(R.id.txtDate)
+        startTime = findViewById(R.id.txtStartTime)
+        endTime = findViewById(R.id.txtEndTime)
 
-        startDate.setOnClickListener {
-            showDatePickerDialog(startDate)
+        txtDate.setOnClickListener {
+            showDatePickerDialog(txtDate)
         }
-        endDate.setOnClickListener {
-            showDatePickerDialog(endDate)
+        startTime.setOnClickListener {
+            showTimePickerDialog(startTime)
+        }
+        endTime.setOnClickListener {
+            showTimePickerDialog(endTime)
         }
 
         btnImage = findViewById(R.id.ibtnAddImage)
@@ -108,11 +110,12 @@ class AddTimesheet : AppCompatActivity() {
             val name : EditText = findViewById(R.id.txtAddTimeName)
             val desc : EditText = findViewById(R.id.txtTimeDescription)
 
-            if ((name.text.equals("")) || (startDate.text.equals("")) || (endDate.text.equals("")) || (desc.text.equals("")))
+            if ((name.text.equals("")) || (txtDate.text.equals("")) || (startTime.text.equals("")) || (endTime.text.equals("")) || (desc.text.equals("")))
             {
                 name.setError("Please enter all fields!")
-                startDate.setError("Please enter all fields!")
-                endDate.setError("Please enter all fields!")
+                txtDate.setError("Please enter all fields!")
+                startTime.setError("Please enter all fields!")
+                endTime.setError("Please enter all fields!")
                 desc.setError("Please enter all fields!")
             }
             else
@@ -121,14 +124,16 @@ class AddTimesheet : AppCompatActivity() {
                 ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
                 val ref2 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/TimesheetName")
                 ref2.setValue(name.text.toString())
-                val ref3 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/StartDate")
-                ref3.setValue(startDate.text.toString())
-                val ref4 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/EndDate")
-                ref4.setValue(endDate.text.toString())
-                val ref5 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/TotalTime")
-                ref5.setValue("4h32m")
-                val ref6 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Description")
-                ref6.setValue(desc.text.toString())
+                val ref3 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Date")
+                ref3.setValue(txtDate.text.toString())
+                val ref4 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/StartTime")
+                ref4.setValue(startTime.text.toString())
+                val ref5 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/EndTime")
+                ref5.setValue(endTime.text.toString())
+                val ref6 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/TotalTime")
+                ref6.setValue("4h32m")
+                val ref7 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Description")
+                ref7.setValue(desc.text.toString())
             }
         }
 
@@ -165,6 +170,19 @@ class AddTimesheet : AppCompatActivity() {
         }, year, month, day)
 
         datePickerDialog.show()
+    }
+
+    private fun showTimePickerDialog(txt: EditText) {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(this, { _, selectedHour, selectedMinute ->
+            val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+            txt.setText(selectedTime)
+        }, hour, minute, true)
+
+        timePickerDialog.show()
     }
 
     override fun onBackPressed() {

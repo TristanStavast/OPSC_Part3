@@ -43,12 +43,9 @@ class Register : AppCompatActivity() {
                 pass.setError("Please enter valid password!")
             }
             else {
-
-                MainActivity.userList.add(Users(uname.text.toString(), pass.text.toString()))
-
-                val ref = db.getReference("Users/" + MainActivity.userList.size + "/Username")
+                val ref = db.getReference("Users/" + (MainActivity.userList.size + 1) + "/Username")
                 ref.setValue(uname.text.toString())
-                val ref2 = db.getReference("Users/" + MainActivity.userList.size + "/Password")
+                val ref2 = db.getReference("Users/" + (MainActivity.userList.size + 1) + "/Password")
                 ref2.setValue(pass.text.toString())
 
                 Toast.makeText(this, "Successfully registered! Please login.", Toast.LENGTH_SHORT).show()
