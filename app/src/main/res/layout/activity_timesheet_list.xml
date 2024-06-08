@@ -40,10 +40,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAddTimesheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Add timesheet"
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="647dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

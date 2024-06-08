@@ -6,7 +6,8 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    tools:context=".Home"
+    android:background="@drawable/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,11 +28,12 @@
 
         <ImageButton
             android:id="@+id/btnNav"
-            android:layout_width="63dp"
-            android:layout_height="56dp"
-            app:srcCompat="@drawable/baseline_settings_24"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/burger_menu"
+            android:background="@drawable/rounded_corner"
+            tools:layout_editor_absoluteX="12dp"
+            tools:layout_editor_absoluteY="12dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
