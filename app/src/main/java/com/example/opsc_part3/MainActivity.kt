@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                     found = true
 
                     SignedIn = i
-                    val int = Intent(this, Home::class.java)
+                    val int = Intent(this, HomeFragment::class.java)
                     startActivity(int)
                     break
                 }
