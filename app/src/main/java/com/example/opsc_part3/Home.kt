@@ -40,7 +40,7 @@ class Home : AppCompatActivity() {
         //Intents
         navView.setNavigationItemSelectedListener {
             val timeint = Intent(this, TimesheetList::class.java)
-
+            val logout = Intent(this, MainActivity::class.java)
 
             when(it.itemId){
                 R.id.nav_settings -> Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
@@ -48,7 +48,7 @@ class Home : AppCompatActivity() {
                 R.id.nav_timesheet -> startActivity(timeint)
                 R.id.nav_categories -> Toast.makeText(applicationContext, "Clicked Categories", Toast.LENGTH_SHORT).show()
                 R.id.nav_profile -> Toast.makeText(applicationContext, "Clicked Profile", Toast.LENGTH_SHORT).show()
-                R.id.nav_logout -> Toast.makeText(applicationContext, "Clicked Logout", Toast.LENGTH_SHORT).show()
+                R.id.nav_logout -> startActivity(logout)
             }
             true
 
@@ -60,6 +60,10 @@ class Home : AppCompatActivity() {
 
         }
         return true
+    }
+
+    override fun onBackPressed() {
+
     }
 
 }

@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     companion object
     {
         val userList = mutableListOf<Users>()
-        var SignedIn : Int = 0
+        var SignedIn : Int = -1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         )
 
         setContentView(R.layout.activity_main)
+
+        SignedIn = -1
 
         database = FirebaseDatabase.getInstance().getReference("Users")
         readDataFromFirebase()
@@ -82,7 +84,6 @@ class MainActivity : AppCompatActivity() {
             var password : EditText = findViewById(R.id.txtPassword)
 
             var found = false
-            SignedIn = -1
 
             for(i in 0 until users.size)
             {
@@ -112,6 +113,10 @@ class MainActivity : AppCompatActivity() {
             val int = Intent(this, Register::class.java)
             startActivity(int)
         }
+    }
+
+    override fun onBackPressed() {
+
     }
 
 
