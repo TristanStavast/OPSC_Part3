@@ -1,11 +1,20 @@
 package com.example.opsc_part3
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -17,6 +26,7 @@ import com.google.android.material.navigation.NavigationView
 
 class TimesheetList : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var lstData: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +70,26 @@ class TimesheetList : AppCompatActivity() {
 
         // Main Code
 
+        // Sample data
+        val dataList = listOf(
+            listOf("Data 1 Column 1", "Data 1 Column 2", "Data 1 Column 3"),
+            listOf("Data 2 Column 1", "Data 2 Column 2", "Data 2 Column 3"),
+            listOf("Data 3 Column 1", "Data 3 Column 2", "Data 3 Column 3")
+        )
+
+        val listView: ListView = findViewById(R.id.lstTimesheets)
+
+        // Simple ArrayAdapter to populate the ListView
+        val adapter = ArrayAdapter(
+            this,
+            R.layout.list_item_layout,
+            R.id.column1TextView,
+            dataList.map { it.joinToString("\n") }
+        )
+
+        listView.adapter = adapter
+
+
         val btnaddtime : Button = findViewById(R.id.btnAddTimesheet)
         val btntimer : Button = findViewById(R.id.btnTimer)
 
@@ -86,4 +116,5 @@ class TimesheetList : AppCompatActivity() {
     override fun onBackPressed() {
 
     }
+
 }
