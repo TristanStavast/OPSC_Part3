@@ -28,6 +28,7 @@ class Home : AppCompatActivity() {
             }
         }
 
+        //Intents
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_report -> Toast.makeText(applicationContext, "Clicked Report", Toast.LENGTH_SHORT).show()
