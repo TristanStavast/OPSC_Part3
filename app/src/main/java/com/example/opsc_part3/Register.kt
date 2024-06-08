@@ -41,7 +41,7 @@ class Register : AppCompatActivity() {
                 pass.setError("Please enter valid password!")
             }
             else {
-                MainActivity.arrUsers.add(Users(uname.text.toString(), pass.text.toString()))
+                //MainActivity.arrUsers.add(Users(uname.text.toString(), pass.text.toString()))
 
                 val ref = db.getReference("Users/" + MainActivity.numUsers + "/Username")
                 ref.setValue(uname.text.toString())
