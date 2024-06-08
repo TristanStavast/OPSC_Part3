@@ -22,13 +22,14 @@ import com.google.firebase.database.getValue
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var rootNode : FirebaseDatabase
+    private lateinit var userReference: DatabaseReference
+
     companion object
     {
         var arrUsers = ArrayList<Users>()
         var SignedIn : Int = 0
         var numUsers : Int = 0
-
-        val db = Firebase.database
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,48 +42,30 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val ref = db.getReference("Users")
-        ref.addValueEventListener(object: ValueEventListener {
+        rootNode = FirebaseDatabase.getInstance()
+        userReference = rootNode.getReference("Users")
+
+        userReference.addValueEventListener(object : ValueEventListener
+        {
             override fun onDataChange(snapshot: DataSnapshot) {
-
-                /*// Iterate through each child snapshot
-                for (userSnapshot in snapshot.children) {
-                    // Get the user object from the snapshot
-                    val user = userSnapshot.getValue(Users::class.java)
-                    if (user != null) {
-                        arrUsers.add(user)
-                    }
-                }*/
-                /*val value = snapshot.getValue()*/
-
-
-                // Retrieve the raw data as an Any type
-                val value = snapshot.getValue()
-
-                if (value != null) {
-                    // Convert the raw data to a JSON string
-                    val jsonString = Gson().toJson(value)
-
-                    // Use the JSON string for further manipulation
-                    println("JSON String: $jsonString")
-
-                    // Optionally, parse the JSON string back to a list of User objects
-                    val userListType = object : TypeToken<ArrayList<User>>() {}.type
-                    val userList: ArrayList<User> = Gson().fromJson(jsonString, userListType)
-
-                    // Print the list of users
-                    userList.forEach {
-                        println("Username: ${it.Username}, Password: ${it.Password}")
-                    }
-                } else {
-                    println("No data available")
+                for (snapshot in snapshot.children)
+                {
+                    val dc = snapshot.getValue(Users::class.java)
+                    arrUsers.add(Users("${dc?.username}", "${dc?.password}"))
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                println("Database error: ${error.message}")
+                //
             }
         })
+
+        arrUsers.add(Users("test1", "test2"))
+        arrUsers.add(Users("test3", "test4"))
+        for (user in arrUsers)
+        {
+            Log.d("test", user.username + " " + user.password)
+        }
 
         var btnlogin : Button = findViewById(R.id.btnLogin)
         var btnreg : Button = findViewById(R.id.btnRegister)
