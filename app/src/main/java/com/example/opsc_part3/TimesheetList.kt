@@ -22,11 +22,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 
 class TimesheetList : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var lstData: ListView
+    var arrList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,24 +72,20 @@ class TimesheetList : AppCompatActivity() {
 
         // Main Code
 
-        // Sample data
-        val dataList = listOf(
-            listOf("Data 1 Column 1", "Data 1 Column 2", "Data 1 Column 3"),
-            listOf("Data 2 Column 1", "Data 2 Column 2", "Data 2 Column 3"),
-            listOf("Data 3 Column 1", "Data 3 Column 2", "Data 3 Column 3")
-        )
+        for (entry in MainActivity.arrTimeSheet)
+        {
+            if (entry.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+            {
+                arrList.add("Timesheet Name: " + entry.tsName + "\nDate: " + entry.date + "\nStart Time: " +
+                        entry.sTime + "\nEnd Time: " + entry.eTime + "\nTime Spent: " + entry.totalTime +
+                            "\nDescription: " + entry.description)
+            }
+        }
 
-        val listView: ListView = findViewById(R.id.lstTimesheets)
-
-        // Simple ArrayAdapter to populate the ListView
-        val adapter = ArrayAdapter(
-            this,
-            R.layout.list_item_layout,
-            R.id.column1TextView,
-            dataList.map { it.joinToString("\n") }
-        )
-
-        listView.adapter = adapter
+        val listbox : ListView = findViewById(R.id.lstTimesheets)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrList)
+        listbox.adapter = adapter
+        adapter.notifyDataSetChanged()
 
 
         val btnaddtime : Button = findViewById(R.id.btnAddTimesheet)
