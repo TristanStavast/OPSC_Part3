@@ -41,11 +41,9 @@ class Register : AppCompatActivity() {
                 pass.setError("Please enter valid password!")
             }
             else {
-<<<<<<< Updated upstream
-                //MainActivity.arrUsers.add(Users(uname.text.toString(), pass.text.toString()))
-=======
+
                 MainActivity.userList.add(Users(uname.text.toString(), pass.text.toString()))
->>>>>>> Stashed changes
+
 
                 val ref = db.getReference("Users/" + MainActivity.userList.size + "/Username")
                 ref.setValue(uname.text.toString())

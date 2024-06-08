@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                     found = true
 
                     SignedIn = i
-                    val int = Intent(this, HomeFragment::class.java)
+                    val int = Intent(this, MenuBar::class.java)
                     startActivity(int)
                     break
                 }
