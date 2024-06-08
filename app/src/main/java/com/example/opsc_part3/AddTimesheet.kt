@@ -113,7 +113,7 @@ class AddTimesheet : AppCompatActivity() {
             val name : EditText = findViewById(R.id.txtAddTimeName)
             val desc : EditText = findViewById(R.id.txtTimeDescription)
 
-            if ((name.text.equals("")) || (txtDate.text.equals("")) || (startTime.text.equals("")) || (endTime.text.equals("")) || (desc.text.equals("")))
+            if ((name.text.toString().equals("")) || (txtDate.text.toString().equals("")) || (startTime.text.toString().equals("")) || (endTime.text.toString().equals("")) || (desc.text.toString().equals("")))
             {
                 name.setError("Please enter all fields!")
                 txtDate.setError("Please enter all fields!")
@@ -123,24 +123,24 @@ class AddTimesheet : AppCompatActivity() {
             }
             else
             {
-                val ref = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Username")
+                val ref = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Username")
                 ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
-                val ref2 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/TimesheetName")
+                val ref2 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TimesheetName")
                 ref2.setValue(name.text.toString())
-                val ref3 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Date")
+                val ref3 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Date")
                 ref3.setValue(txtDate.text.toString())
-                val ref4 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/StartTime")
+                val ref4 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/StartTime")
                 ref4.setValue(startTime.text.toString())
-                val ref5 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/EndTime")
+                val ref5 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/EndTime")
                 ref5.setValue(endTime.text.toString())
 
                 val totalTime = calculateTotalTime(startTime.text.toString(), endTime.text.toString())
-                val ref6 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/TotalTime")
+                val ref6 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TotalTime")
                 ref6.setValue(totalTime)
 
-                val ref7 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Description")
+                val ref7 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Description")
                 ref7.setValue(desc.text.toString())
-                val ref8 = Register.db.getReference("Timesheet/" + MainActivity.arrTimeSheet.size + "/Image")
+                val ref8 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Image")
                 ref8.setValue(imgString)
             }
         }
