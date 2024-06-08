@@ -41,27 +41,41 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        fun parseUsers(input: String, users: ArrayList<Users>) {
-            val regex = Regex("\\{Username=(.*?), Password=(.*?)\\}")
-            val matches = regex.findAll(input)
-
-            for (match in matches) {
-                val (username, password) = match.destructured
-                users.add(Users(username, password))
-            }
-        }
-
         val ref = db.getReference("Users")
         ref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                // Iterate through each child snapshot
+                /*// Iterate through each child snapshot
                 for (userSnapshot in snapshot.children) {
                     // Get the user object from the snapshot
                     val user = userSnapshot.getValue(Users::class.java)
                     if (user != null) {
                         arrUsers.add(user)
                     }
+                }*/
+                /*val value = snapshot.getValue()*/
+
+
+                // Retrieve the raw data as an Any type
+                val value = snapshot.getValue()
+
+                if (value != null) {
+                    // Convert the raw data to a JSON string
+                    val jsonString = Gson().toJson(value)
+
+                    // Use the JSON string for further manipulation
+                    println("JSON String: $jsonString")
+
+                    // Optionally, parse the JSON string back to a list of User objects
+                    val userListType = object : TypeToken<ArrayList<User>>() {}.type
+                    val userList: ArrayList<User> = Gson().fromJson(jsonString, userListType)
+
+                    // Print the list of users
+                    userList.forEach {
+                        println("Username: ${it.Username}, Password: ${it.Password}")
+                    }
+                } else {
+                    println("No data available")
                 }
             }
 
@@ -69,13 +83,6 @@ class MainActivity : AppCompatActivity() {
                 println("Database error: ${error.message}")
             }
         })
-
-        for (user in arrUsers)
-        {
-            numUsers++
-        }
-
-        Toast.makeText(this, numUsers.toString(), Toast.LENGTH_SHORT).show()
 
         var btnlogin : Button = findViewById(R.id.btnLogin)
         var btnreg : Button = findViewById(R.id.btnRegister)
