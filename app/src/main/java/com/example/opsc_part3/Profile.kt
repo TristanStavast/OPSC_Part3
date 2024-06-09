@@ -34,7 +34,7 @@ class Profile : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
-    private var imgString: String = ""
+    private var imgString: String? = ""
 
     companion object
     {
@@ -113,8 +113,8 @@ class Profile : AppCompatActivity() {
 
                 if (user.image != null)
                 {
-                    val base64ImageString = user.image
-                    val bitmap = decodeBase64ToBitmap(base64ImageString)
+                    imgString = user.image
+                    val bitmap = decodeBase64ToBitmap(imgString)
                     bitmap?.let {
                         btnImage.setImageBitmap(it)
                     }
