@@ -48,6 +48,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/txtEditTs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="513dp"
+            android:layout_marginEnd="221dp"
+            android:layout_marginBottom="196dp"
+            android:gravity="center"
+            android:text="Edit a Timesheet Entry"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/textView4"
             android:layout_width="160dp"
             android:layout_height="24dp"
@@ -141,6 +159,45 @@
             android:layout_marginTop="125dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="308dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <AutoCompleteTextView
+            android:id="@+id/cmbDashTS"
+            android:layout_width="175dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="535dp"
+            android:layout_marginEnd="208dp"
+            android:layout_marginBottom="161dp"
+            android:background="@drawable/rounded_corner"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="Select a timesheet"
+            android:inputType="none"
+            android:paddingLeft="12dp"
+            android:textColor="@color/black"
+            android:textColorHint="#65FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnDashEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="585dp"
+            android:layout_marginEnd="233dp"
+            android:layout_marginBottom="98dp"
+            android:backgroundTint="#3C9A14"
+            android:text="Edit Entry"
+            android:textColor="@color/black"
+            android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

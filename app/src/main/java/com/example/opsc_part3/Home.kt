@@ -19,6 +19,8 @@ import com.google.android.material.navigation.NavigationView
 import org.w3c.dom.Text
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -72,6 +74,34 @@ class Home : AppCompatActivity() {
 
         }
 
+
+        // Dash Combo Box
+        val items = ArrayList<String?>()
+        for (user in MainActivity.userList)
+        {
+            if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+            {
+                for (ts in MainActivity.arrTimeSheet)
+                {
+                    if (user.username.equals(ts.username))
+                    {
+                        items.add(ts.tsName)
+                    }
+                }
+            }
+        }
+
+        val cat : AutoCompleteTextView = findViewById(R.id.cmbDashTS)
+        val adapter2 = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+        cat.setAdapter(adapter2)
+
+        cat.inputType = 0
+        cat.setOnClickListener()
+        {
+            cat.showDropDown()
+        }
+
+
         // Main Code
 
         var txtCounter : TextView = findViewById(R.id.txtNumTime)
@@ -119,6 +149,21 @@ class Home : AppCompatActivity() {
         {
             val clockint = Intent(this, Timer::class.java)
             startActivity(clockint)
+        }
+
+        var editEntry : Button = findViewById(R.id.btnDashEdit)
+        editEntry.setOnClickListener()
+        {
+            if (cat.text.toString().equals(""))
+            {
+                cat.error = "Please select a timesheet"
+            }
+            else
+            {
+                entry = cat.text.toString()
+                val int = Intent(this, EditTimesheet::class.java)
+                startActivity(int)
+            }
         }
 
     }

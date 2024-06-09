@@ -31,7 +31,6 @@ class EditTimesheet : AppCompatActivity() {
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
     private var imgString: String? = ""
-    private var entry: String? = "tester"
     private var counter: Int = 0
 
     companion object
@@ -120,7 +119,7 @@ class EditTimesheet : AppCompatActivity() {
 
         for (ts in MainActivity.arrTimeSheet)
         {
-            if ((ts.username.equals(MainActivity.userList[MainActivity.SignedIn].username)) && (ts.tsName.equals(entry)))
+            if ((ts.username.equals(MainActivity.userList[MainActivity.SignedIn].username)) && (ts.tsName.equals(Home.entry)))
             {
                 tsname.setText(ts.tsName)
                 tsdesc.setText(ts.description)
@@ -142,7 +141,7 @@ class EditTimesheet : AppCompatActivity() {
         for (i in 0 until MainActivity.arrTimeSheet.size)
         {
             if ((MainActivity.userList[MainActivity.SignedIn].username.equals(MainActivity.arrTimeSheet[i].username)) &&
-                (entry.equals(MainActivity.arrTimeSheet[i].tsName)))
+                (Home.entry.equals(MainActivity.arrTimeSheet[i].tsName)))
             {
                 counter = i
             }
@@ -161,7 +160,7 @@ class EditTimesheet : AppCompatActivity() {
 
             for (ts in MainActivity.arrTimeSheet)
             {
-                if ((ts.username.equals(MainActivity.userList[MainActivity.SignedIn].username)) && (ts.tsName.equals(entry)))
+                if ((ts.username.equals(MainActivity.userList[MainActivity.SignedIn].username)) && (ts.tsName.equals(Home.entry)))
                 {
                     if ((tsname.text.toString() != "") && (tsdesc.text.toString() != ""))
                     {
