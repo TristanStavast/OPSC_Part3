@@ -69,11 +69,16 @@ class Categories : AppCompatActivity() {
         {
             var catName : EditText = findViewById(R.id.txtCategoryName)
             var catDesc : EditText = findViewById(R.id.txtCategoryDescription)
+            val isCategoryExists = CheckIfExists.isCategoryExists(MainActivity.userList[MainActivity.SignedIn].username,catName.text.toString(), MainActivity.arrCategoryData)
 
             if ((catName.text.toString().equals("")) || (catDesc.text.toString().equals("")))
             {
-                catName.error = "Please enter all fields."
+                catName.error= "Please enter all fields."
                 catDesc.error = "Please enter all fields."
+            }
+            else if (isCategoryExists)
+            {
+                catName.error = "Category already exists."
             }
             else
             {

@@ -36,11 +36,16 @@ class Register : AppCompatActivity() {
         btnReg.setOnClickListener() {
             var uname: EditText = findViewById(R.id.txtRegUsername)
             var pass: EditText = findViewById(R.id.txtRegPassword)
+            val isUsernameExists = CheckIfExists.isUsernameExists(uname.text.toString(), MainActivity.userList)
 
             //error handling
             if ((uname.text.toString().equals("")) || (pass.text.toString().equals(""))) {
-                uname.setError("Please enter valid username!")
-                pass.setError("Please enter valid password!")
+                uname.error = "Please enter valid username!"
+                pass.error = "Please enter valid password!"
+            }
+            else if (isUsernameExists)
+            {
+                uname.error = "Username already exists."
             }
             else {
                 val ref = db.getReference("Users/" + (MainActivity.userList.size + 1) + "/Username")

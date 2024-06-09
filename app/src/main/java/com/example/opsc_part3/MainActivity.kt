@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity() {
             }
             if(found == false)
             {
-                username.setError("Please enter valid username!")
-                password.setError("Please enter valid password!")
+                username.error = "Please enter valid username!"
+                password.error = "Please enter valid password!"
             }
 
         }

@@ -142,15 +142,20 @@ class AddTimesheet : AppCompatActivity() {
         {
             val name : EditText = findViewById(R.id.txtAddTimeName)
             val desc : EditText = findViewById(R.id.txtTimeDescription)
+            val isTimesheetExists = CheckIfExists.isTimesheetExists(MainActivity.userList[MainActivity.SignedIn].username, name.text.toString(), MainActivity.arrTimeSheet)
 
             if ((name.text.toString().equals("")) || (txtDate.text.toString().equals("")) || (startTime.text.toString().equals("")) || (endTime.text.toString().equals("")) || (desc.text.toString().equals("")) || (cat.text.toString().equals("")))
             {
-                name.setError("Please enter all fields!")
-                txtDate.setError("Please enter all fields!")
-                startTime.setError("Please enter all fields!")
-                endTime.setError("Please enter all fields!")
-                desc.setError("Please enter all fields!")
-                cat.setError("Please select a category")
+                name.error = "Please enter all fields!"
+                txtDate.error = "Please enter all fields!"
+                startTime.error = "Please enter all fields!"
+                endTime.error = "Please enter all fields!"
+                desc.error = "Please enter all fields!"
+                cat.error = "Please select a category"
+            }
+            else if (isTimesheetExists)
+            {
+                name.error = "Timesheet name already exists."
             }
             else
             {
