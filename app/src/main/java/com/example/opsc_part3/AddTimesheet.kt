@@ -106,7 +106,7 @@ class AddTimesheet : AppCompatActivity() {
             }
         }
 
-        val cat : AutoCompleteTextView = findViewById(R.id.cmbCategory)
+        val cat : AutoCompleteTextView = findViewById(R.id.cmbTsCategory)
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
         cat.setAdapter(adapter)
 
@@ -130,7 +130,7 @@ class AddTimesheet : AppCompatActivity() {
             showTimePickerDialog(endTime)
         }
 
-        btnImage = findViewById(R.id.ibtnAddImage)
+        btnImage = findViewById(R.id.btnAddTsImage)
         btnImage.setOnClickListener()
         {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

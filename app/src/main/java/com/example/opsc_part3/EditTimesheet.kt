@@ -10,6 +10,8 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -18,23 +20,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.Firebase
-import com.google.firebase.database.database
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
-import java.util.regex.Pattern
 
-class Profile : AppCompatActivity() {
+class EditTimesheet : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
     private var imgString: String? = ""
+    private var entry: String? = "ts with image"
 
-    companion object
-    {
-        val dbref = Firebase.database
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,7 +40,7 @@ class Profile : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_edit_timesheet)
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
@@ -65,6 +61,7 @@ class Profile : AppCompatActivity() {
             val logout = Intent(this, MainActivity::class.java)
             val reports = Intent(this, Reports::class.java)
             val settings = Intent(this, Settings::class.java)
+            val profile = Intent(this, Profile::class.java)
 
             when(it.itemId){
                 R.id.nav_home -> startActivity(homeint)
@@ -72,6 +69,7 @@ class Profile : AppCompatActivity() {
                 R.id.nav_report -> startActivity(reports)
                 R.id.nav_timesheet -> startActivity(timeint)
                 R.id.nav_categories -> startActivity(categint)
+                R.id.nav_profile -> startActivity(profile)
                 R.id.nav_logout -> startActivity(logout)
             }
             true
@@ -80,38 +78,51 @@ class Profile : AppCompatActivity() {
 
 
         // Main Code
-        var username : EditText = findViewById(R.id.txtTsName)
-        var email : EditText = findViewById(R.id.txtTsDescription)
-        var password : EditText = findViewById(R.id.txtTsTotalTime)
-        var fullname : EditText = findViewById(R.id.txtTsDate)
-        btnImage = findViewById(R.id.btnAddTsImage)
-
+        val items = ArrayList<String?>()
         for (user in MainActivity.userList)
         {
             if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
             {
-                username.hint = user.username
-                if (user.email == null)
+                for (cat in MainActivity.arrCategoryData)
                 {
-                    email.hint = "Email"
+                    if (user.username.equals(cat.username))
+                    {
+                        items.add(cat.CategoryName)
+                    }
                 }
-                else
-                {
-                    email.setText(user.email)
-                }
-                if (user.fullname == null)
-                {
-                    fullname.hint = "Full Name"
-                }
-                else
-                {
-                    fullname.setText(user.fullname)
-                }
-                password.setText(user.password)
+            }
+        }
 
-                if (user.image != null)
+        val cat : AutoCompleteTextView = findViewById(R.id.cmbTsCategory)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+        cat.setAdapter(adapter)
+
+        cat.inputType = 0
+        cat.setOnClickListener()
+        {
+            cat.showDropDown()
+        }
+
+
+        var tsname : EditText = findViewById(R.id.txtTsName)
+        var tsdesc : EditText = findViewById(R.id.txtTsDescription)
+        var tsdate : EditText = findViewById(R.id.txtTsDate)
+        var tstotaltime : EditText = findViewById(R.id.txtTsTotalTime)
+        var btnImage : ImageButton = findViewById(R.id.btnAddTsImage)
+
+        for (ts in MainActivity.arrTimeSheet)
+        {
+            if ((ts.username.equals(MainActivity.userList[MainActivity.SignedIn].username)) && (ts.tsName.equals(entry)))
+            {
+                tsname.setText(ts.tsName)
+                tsdesc.setText(ts.description)
+                tsdate.setText(ts.date)
+                tstotaltime.setText(ts.totalTime)
+                cat.setText(ts.tsCategory)
+
+                if (ts.image != null)
                 {
-                    imgString = user.image
+                    imgString = ts.image
                     val bitmap = decodeBase64ToBitmap(imgString)
                     bitmap?.let {
                         btnImage.setImageBitmap(it)
@@ -130,49 +141,34 @@ class Profile : AppCompatActivity() {
         saveChanges.setOnClickListener()
         {
             var save = false
-            for (user in MainActivity.userList)
+
+            for (ts in MainActivity.arrTimeSheet)
             {
-                if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+                if ((ts.username.equals(MainActivity.userList[MainActivity.SignedIn].username)) && (ts.tsName.equals(entry)))
                 {
-                    if ((email.text.toString() != "") && (isValidEmail(email)))
+                    if ((tsname.text.toString() != "") && (tsdesc.text.toString() != ""))
                     {
-                        user.email = email.text.toString()
-                    }
-                    else if ((email.text.toString() != "") && (!isValidEmail(email)))
-                    {
-                        email.setError("Email is not in the right format")
-                        save = false
-                        break
-                    }
-                    if (fullname.text.toString() != "")
-                    {
-                        user.fullname = fullname.text.toString()
+                        ts.tsName = tsname.text.toString()
+                        ts.description = tsdesc.text.toString()
+                        ts.tsCategory = cat.text.toString()
                     }
 
-                    user.password = password.text.toString()
-                    user.image = imgString
                     save = true
                 }
             }
 
             if (save == true)
             {
-                val ref = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Username")
-                ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
-                val ref2 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Password")
-                ref2.setValue(password.text.toString())
-                val ref3 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Email")
-                ref3.setValue(email.text.toString())
-                val ref4 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/FullName")
-                ref4.setValue(fullname.text.toString())
-                val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Image")
-                ref5.setValue(imgString)
+
             }
 
-            Toast.makeText(this, "Profile changes have been saved", Toast.LENGTH_SHORT).show()
-            val int = Intent(this, Home::class.java)
+            Toast.makeText(this, "Entry changes have been saved", Toast.LENGTH_SHORT).show()
+            val int = Intent(this, TimesheetList::class.java)
             startActivity(int)
+
         }
+
+
     }
 
     private fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {
@@ -200,15 +196,6 @@ class Profile : AppCompatActivity() {
                 imgString = Base64.encodeToString(byteArray, Base64.DEFAULT)
             }
         }
-    }
-
-    fun isValidEmail(editText: EditText): Boolean {
-        val emailPattern = Pattern.compile(
-            "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
-            Pattern.CASE_INSENSITIVE
-        )
-        val email = editText.text.toString().trim()
-        return emailPattern.matcher(email).matches()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

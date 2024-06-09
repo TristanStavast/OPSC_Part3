@@ -53,7 +53,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/ibtnAddImage"
+            android:id="@+id/btnAddTsImage"
             android:layout_width="94dp"
             android:layout_height="92dp"
             android:layout_marginStart="158dp"
@@ -197,7 +197,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <AutoCompleteTextView
-            android:id="@+id/cmbCategory"
+            android:id="@+id/cmbTsCategory"
             android:layout_width="250dp"
             android:layout_height="35dp"
             android:layout_marginStart="80dp"
