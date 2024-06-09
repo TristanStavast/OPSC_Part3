@@ -52,4 +52,7 @@ class Categories : AppCompatActivity() {
 
         }
     }
+    override fun onBackPressed() {
+
+    }
 }
