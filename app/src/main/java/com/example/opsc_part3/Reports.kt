@@ -1,8 +1,10 @@
 package com.example.opsc_part3
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -11,8 +13,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import java.util.Calendar
 
 class Reports : AppCompatActivity() {
+    private lateinit var txtStartDate : EditText
+    private lateinit var txtEndDate : EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -53,6 +59,28 @@ class Reports : AppCompatActivity() {
             true
 
         }
+        txtStartDate = findViewById(R.id.txtStartDate)
+        txtEndDate = findViewById(R.id.txtEndDate)
+
+        txtStartDate.setOnClickListener {
+            showDatePickerDialog(txtStartDate)
+        }
+        txtEndDate.setOnClickListener {
+            showDatePickerDialog(txtEndDate)
+        }
+    }
+    private fun showDatePickerDialog(txt: EditText) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+            txt.setText("$selectedDate")
+        }, year, month, day)
+
+        datePickerDialog.show()
     }
     override fun onBackPressed() {
 
