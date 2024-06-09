@@ -1,5 +1,6 @@
 package com.example.opsc_part3
 
+import TimesheetAdapter
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import java.util.Calendar
 
@@ -59,6 +62,14 @@ class Reports : AppCompatActivity() {
             true
 
         }
+
+        val rvReport: RecyclerView = findViewById(R.id.rvReport)
+        val username = MainActivity.userList[MainActivity.SignedIn].username
+        val filteredTimesheets = MainActivity.arrTimeSheet.filter { it.username == username }
+        val adapter = TimesheetAdapter(this, filteredTimesheets)
+        rvReport.adapter = adapter
+        rvReport.layoutManager = LinearLayoutManager(this)
+
         txtStartDate = findViewById(R.id.txtStartDate)
         txtEndDate = findViewById(R.id.txtEndDate)
 
