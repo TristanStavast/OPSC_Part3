@@ -1,17 +1,23 @@
 package com.example.opsc_part3
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import org.w3c.dom.Text
+import android.graphics.BitmapFactory
+import android.util.Base64
 
 class Home : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
@@ -59,17 +65,22 @@ class Home : AppCompatActivity() {
 
         }
 
-        //main code
+        // Main Code
+        var lblUN : TextView = findViewById(R.id.lblDashUsername)
+        var imgUser : ImageView = findViewById(R.id.imgUserImage)
         for (user in MainActivity.userList)
         {
             if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
             {
-                uname = user.username
+                lblUN.text = user.username
+                val bitmap = decodeBase64ToBitmap(user.image)
+                if (bitmap != null) {
+                    imgUser.setImageBitmap(bitmap)
+                } else {
+                    imgUser.setImageResource(R.drawable.baseline_person_24)
+                }
             }
         }
-        var welcome: TextView = findViewById(R.id.txtWelcome)
-        welcome.setText("Welcome, " + uname)
-
 
         var clock : ImageButton = findViewById(R.id.btnClock)
         clock.setOnClickListener()
@@ -85,6 +96,16 @@ class Home : AppCompatActivity() {
 
         }
         return true
+    }
+
+    private fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {
+        return try {
+            val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+            null
+        }
     }
 
     override fun onBackPressed() {

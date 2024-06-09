@@ -87,6 +87,8 @@ class Categories : AppCompatActivity() {
                         ref2.setValue(catName.text.toString())
                         val ref3 = dbCat.getReference("Category/" + (MainActivity.arrCategoryData.size + 1) + "/Description")
                         ref3.setValue(catDesc.text.toString())
+
+                        Toast.makeText(this, "Category successfully added.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
