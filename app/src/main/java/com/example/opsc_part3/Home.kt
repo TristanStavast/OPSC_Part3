@@ -24,7 +24,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Home : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
-    var uname : String? = ""
+
+    companion object{
+        var entry: String? = ""
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
