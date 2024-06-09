@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,7 @@ import com.google.android.material.navigation.NavigationView
 
 class Home : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
-
+    var uname : String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,6 +55,17 @@ class Home : AppCompatActivity() {
             true
 
         }
+
+        //main code
+        for (user in MainActivity.userList)
+        {
+            if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+            {
+                uname = user.username
+            }
+        }
+        var welcome: TextView = findViewById(R.id.txtWelcome)
+        welcome.setText("Welcome, " + uname)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

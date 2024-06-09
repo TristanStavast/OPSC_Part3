@@ -16,12 +16,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Activity 1"
+            android:id="@+id/txtWelcome"
+            android:layout_marginStart="152dp"
+            android:layout_marginTop="58dp"
+            android:layout_marginEnd="153dp"
+            android:layout_marginBottom="638dp"
+            android:text="Welcome"
             android:textColor="@color/black"
-            android:textSize="26sp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,6 +46,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.063" />
 
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:src="@drawable/stopwatch"
+            android:scaleType="fitCenter"
+            tools:layout_editor_absoluteX="205dp"
+            tools:layout_editor_absoluteY="525dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -52,6 +65,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
+
 
     </com.google.android.material.navigation.NavigationView>
 
