@@ -70,11 +70,20 @@ class Home : AppCompatActivity() {
 
         // Main Code
 
-        val rvDash: RecyclerView = findViewById(R.id.rvDashboard)
+        var txtCounter : TextView = findViewById(R.id.txtNumTime)
+        var counter = 0
+        for (ts in MainActivity.arrTimeSheet)
+        {
+            if (ts.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+            {
+                counter++
+            }
+        }
+        txtCounter.setText("Number of timesheets added: " + counter.toString())
 
+        val rvDash: RecyclerView = findViewById(R.id.rvDashboard)
         val username = MainActivity.userList[MainActivity.SignedIn].username
         val filteredTimesheets = MainActivity.arrTimeSheet.filter { it.username == username }
-
         val adapter = TimesheetAdapter(this, filteredTimesheets)
         rvDash.adapter = adapter
         rvDash.layoutManager = LinearLayoutManager(this)
