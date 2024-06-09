@@ -87,7 +87,6 @@ class TimesheetList : AppCompatActivity() {
 
         val btnaddtime : Button = findViewById(R.id.btnAddTimesheet)
         val btntimer : Button = findViewById(R.id.btnTimer)
-        val btneditentry : Button = findViewById(R.id.btnEditEntry)
 
         btnaddtime.setOnClickListener()
         {
@@ -98,12 +97,6 @@ class TimesheetList : AppCompatActivity() {
         btntimer.setOnClickListener()
         {
             val int = Intent(this, Timer::class.java)
-            startActivity(int)
-        }
-
-        btneditentry.setOnClickListener()
-        {
-            val int = Intent(this, EditTimesheet::class.java)
             startActivity(int)
         }
     }
