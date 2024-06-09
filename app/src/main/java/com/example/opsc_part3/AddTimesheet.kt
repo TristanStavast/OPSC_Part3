@@ -143,13 +143,14 @@ class AddTimesheet : AppCompatActivity() {
             val name : EditText = findViewById(R.id.txtAddTimeName)
             val desc : EditText = findViewById(R.id.txtTimeDescription)
 
-            if ((name.text.toString().equals("")) || (txtDate.text.toString().equals("")) || (startTime.text.toString().equals("")) || (endTime.text.toString().equals("")) || (desc.text.toString().equals("")))
+            if ((name.text.toString().equals("")) || (txtDate.text.toString().equals("")) || (startTime.text.toString().equals("")) || (endTime.text.toString().equals("")) || (desc.text.toString().equals("")) || (cat.text.toString().equals("")))
             {
                 name.setError("Please enter all fields!")
                 txtDate.setError("Please enter all fields!")
                 startTime.setError("Please enter all fields!")
                 endTime.setError("Please enter all fields!")
                 desc.setError("Please enter all fields!")
+                cat.setError("Please select a category")
             }
             else
             {
@@ -157,21 +158,23 @@ class AddTimesheet : AppCompatActivity() {
                 ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
                 val ref2 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TimesheetName")
                 ref2.setValue(name.text.toString())
-                val ref3 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Date")
-                ref3.setValue(txtDate.text.toString())
-                val ref4 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/StartTime")
-                ref4.setValue(startTime.text.toString())
-                val ref5 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/EndTime")
-                ref5.setValue(endTime.text.toString())
+                val ref3 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Category")
+                ref3.setValue(cat.text.toString())
+                val ref4 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Date")
+                ref4.setValue(txtDate.text.toString())
+                val ref5 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/StartTime")
+                ref5.setValue(startTime.text.toString())
+                val ref6 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/EndTime")
+                ref6.setValue(endTime.text.toString())
 
                 val totalTime = calculateTotalTime(startTime.text.toString(), endTime.text.toString())
-                val ref6 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TotalTime")
-                ref6.setValue(totalTime)
+                val ref7 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TotalTime")
+                ref7.setValue(totalTime)
 
-                val ref7 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Description")
-                ref7.setValue(desc.text.toString())
-                val ref8 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Image")
-                ref8.setValue(imgString)
+                val ref8 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Description")
+                ref8.setValue(desc.text.toString())
+                val ref9 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Image")
+                ref9.setValue(imgString)
 
                 Toast.makeText(this, "Successfully added timesheet data", Toast.LENGTH_SHORT).show()
                 val int = Intent(this, TimesheetList::class.java)
