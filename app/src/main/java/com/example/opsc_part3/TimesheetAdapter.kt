@@ -4,10 +4,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.opsc_part3.EditTimesheet
 import com.example.opsc_part3.R
 import com.example.opsc_part3.TimesheetData
 
-class TimesheetAdapter(private val context: Context, private val timesheetList: List<TimesheetData>) :
+class TimesheetAdapter(private var context: Context, private var timesheetList: List<TimesheetData>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_HEADER = 0
@@ -61,5 +62,11 @@ class TimesheetAdapter(private val context: Context, private val timesheetList: 
         } else {
             VIEW_TYPE_ITEM
         }
+    }
+
+    fun updateData(newTimesheet: List<TimesheetData>)
+    {
+        timesheetList = newTimesheet
+        notifyDataSetChanged()
     }
 }
