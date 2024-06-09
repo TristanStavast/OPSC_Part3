@@ -44,10 +44,12 @@ class Home : AppCompatActivity() {
             val logout = Intent(this, MainActivity::class.java)
             val profile = Intent(this, Profile::class.java)
             val categint = Intent(this, Categories::class.java)
+            val reports = Intent(this, Reports::class.java)
+            val settings = Intent(this, Settings::class.java)
 
             when(it.itemId){
-                R.id.nav_settings -> Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
-                R.id.nav_report -> Toast.makeText(applicationContext, "Clicked Report", Toast.LENGTH_SHORT).show()
+                R.id.nav_settings -> startActivity(settings)
+                R.id.nav_report -> startActivity(reports)
                 R.id.nav_timesheet -> startActivity(timeint)
                 R.id.nav_categories -> startActivity(categint)
                 R.id.nav_profile -> startActivity(profile)
