@@ -24,8 +24,8 @@
 
     <EditText
         android:id="@+id/txtUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
         android:layout_marginStart="59dp"
         android:layout_marginTop="285dp"
         android:layout_marginEnd="59dp"
@@ -46,8 +46,8 @@
 
     <EditText
         android:id="@+id/txtPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
         android:layout_marginStart="59dp"
         android:layout_marginTop="368dp"
         android:layout_marginEnd="59dp"
@@ -74,6 +74,7 @@
         android:layout_marginStart="162dp"
         android:layout_marginTop="442dp"
         android:layout_marginEnd="161dp"
+        android:textSize="17dp"
         android:layout_marginBottom="241dp"
         android:backgroundTint="#3C9A14"
         android:text="Login"
@@ -110,7 +111,7 @@
         android:layout_marginBottom="205dp"
         android:text="OR"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +127,7 @@
         android:layout_marginBottom="141dp"
         android:backgroundTint="#3C9A14"
         android:text="Register"
+        android:textSize="17dp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
