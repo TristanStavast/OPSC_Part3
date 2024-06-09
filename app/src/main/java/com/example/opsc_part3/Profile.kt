@@ -113,7 +113,11 @@ class Profile : AppCompatActivity() {
 
                 if (user.image != null)
                 {
-
+                    val base64ImageString = user.image
+                    val bitmap = decodeBase64ToBitmap(base64ImageString)
+                    bitmap?.let {
+                        btnImage.setImageBitmap(it)
+                    }
                 }
             }
         }
@@ -166,6 +170,16 @@ class Profile : AppCompatActivity() {
                 val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Image")
                 ref5.setValue(imgString)
             }
+        }
+    }
+
+    private fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {
+        return try {
+            val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+            null
         }
     }
 
