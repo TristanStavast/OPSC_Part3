@@ -25,6 +25,8 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.Calendar
 import android.util.Base64
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 
 class AddTimesheet : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
@@ -87,6 +89,22 @@ class AddTimesheet : AppCompatActivity() {
 
         // Main Code
 
+        val items = ArrayList<String?>()
+        for (cat in MainActivity.arrCategoryData)
+        {
+            items.add(cat.CategoryName)
+        }
+
+        val cat : AutoCompleteTextView = findViewById(R.id.cmbCategory)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+        cat.setAdapter(adapter)
+
+        cat.inputType = 0
+        cat.setOnClickListener()
+        {
+            cat.showDropDown()
+        }
+
         txtDate = findViewById(R.id.txtDate)
         startTime = findViewById(R.id.txtStartTime)
         endTime = findViewById(R.id.txtEndTime)
@@ -109,7 +127,6 @@ class AddTimesheet : AppCompatActivity() {
         }
 
         val btnaddtimes : Button = findViewById(R.id.btnAddTimes)
-
         btnaddtimes.setOnClickListener()
         {
             val name : EditText = findViewById(R.id.txtAddTimeName)

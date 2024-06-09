@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     {
         val userList = mutableListOf<Users>()
         val arrTimeSheet = mutableListOf<TimesheetData>()
+        val arrCategoryData = mutableListOf<CategoryData>()
         var SignedIn : Int = -1
     }
 
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                 for (timeSnapshot in snapshot.children) {
                     val username = timeSnapshot.child("Username").getValue(String::class.java)
                     val tsname = timeSnapshot.child("TimesheetName").getValue(String::class.java)
+                    val tscategory = timeSnapshot.child("Category").getValue(String::class.java)
                     val date = timeSnapshot.child("Date").getValue(String::class.java)
                     val stime = timeSnapshot.child("StartTime").getValue(String::class.java)
                     val etime = timeSnapshot.child("EndTime").getValue(String::class.java)
@@ -88,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     val description = timeSnapshot.child("Description").getValue(String::class.java)
                     val img = timeSnapshot.child("Image").getValue(String::class.java)
                     if (username != null && tsname != null && date != null && stime != null && etime != null && totaltime != null && description != null) {
-                        val ts = TimesheetData(username, tsname, date, stime, etime, totaltime, description, img)
+                        val ts = TimesheetData(username, tsname, tscategory, date, stime, etime, totaltime, description, img)
                         arrTimeSheet.add(ts)
                     }
                 }
