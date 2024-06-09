@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var ref1: DatabaseReference
     private lateinit var ref2: DatabaseReference
+    private lateinit var ref3: DatabaseReference
 
     companion object
     {
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         ref1 = FirebaseDatabase.getInstance().getReference("Users")
         ref2 = FirebaseDatabase.getInstance().getReference("Timesheet")
+        ref3 = FirebaseDatabase.getInstance().getReference("Category")
         readDataFromFirebase()
 
     }
@@ -101,6 +103,25 @@ class MainActivity : AppCompatActivity() {
                 //
             }
 
+        })
+
+        ref3.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                arrCategoryData.clear()
+                for (catSnapshot in snapshot.children) {
+                    val username = catSnapshot.child("Username").getValue(String::class.java)
+                    val catName = catSnapshot.child("Password").getValue(String::class.java)
+                    val catDesc = catSnapshot.child("Email").getValue(String::class.java)
+                    if (username != null && catName != null && catDesc != null) {
+                        val arrcategories = CategoryData(username, catName, catDesc)
+                        arrCategoryData.add(arrcategories)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
         })
 
         MainCode(userList)

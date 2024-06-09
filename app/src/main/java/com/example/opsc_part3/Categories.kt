@@ -3,6 +3,8 @@ package com.example.opsc_part3
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -50,6 +52,31 @@ class Categories : AppCompatActivity() {
             }
             true
 
+        }
+
+        // Main Code
+
+        var btnAdd : Button = findViewById(R.id.btnAddCategory)
+        btnAdd.setOnClickListener()
+        {
+            var catName : EditText = findViewById(R.id.txtCategoryName)
+            var catDesc : EditText = findViewById(R.id.txtCategoryDescription)
+
+            if ((catName.text.toString().equals("")) || (catDesc.text.toString().equals("")))
+            {
+                catName.error = "Please enter all fields."
+                catDesc.error = "Please enter all fields."
+            }
+            else
+            {
+                for (user in MainActivity.userList)
+                {
+                    if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+                    {
+                        MainActivity.arrCategoryData.add(CategoryData(user.username, catName.text.toString(), catDesc.text.toString()))
+                    }
+                }
+            }
         }
     }
     override fun onBackPressed() {
