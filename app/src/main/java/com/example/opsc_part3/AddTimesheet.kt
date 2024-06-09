@@ -90,9 +90,18 @@ class AddTimesheet : AppCompatActivity() {
         // Main Code
 
         val items = ArrayList<String?>()
-        for (cat in MainActivity.arrCategoryData)
+        for (user in MainActivity.userList)
         {
-            items.add(cat.CategoryName)
+            if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+            {
+                for (cat in MainActivity.arrCategoryData)
+                {
+                    if (user.username.equals(cat.username))
+                    {
+                        items.add(cat.CategoryName)
+                    }
+                }
+            }
         }
 
         val cat : AutoCompleteTextView = findViewById(R.id.cmbCategory)

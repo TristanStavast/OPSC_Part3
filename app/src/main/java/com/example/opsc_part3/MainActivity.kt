@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         val arrTimeSheet = mutableListOf<TimesheetData>()
         val arrCategoryData = mutableListOf<CategoryData>()
         var SignedIn : Int = -1
+        val dbtes = Firebase.database
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
