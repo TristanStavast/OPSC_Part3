@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
@@ -62,7 +64,9 @@ class Categories : AppCompatActivity() {
 
         }
 
+
         // Main Code
+        rvLoad()
 
         var btnAdd : Button = findViewById(R.id.btnAddCategory)
         btnAdd.setOnClickListener()
@@ -94,11 +98,26 @@ class Categories : AppCompatActivity() {
                         ref3.setValue(catDesc.text.toString())
 
                         Toast.makeText(this, "Category successfully added.", Toast.LENGTH_SHORT).show()
+                        val int = Intent(this, Home::class.java)
+                        startActivity(int)
                     }
                 }
             }
         }
     }
+
+    private fun rvLoad()
+    {
+        val rv: RecyclerView = findViewById(R.id.rvCategories)
+        rv.layoutManager = LinearLayoutManager(this)
+
+        val username = MainActivity.userList[MainActivity.SignedIn].username
+        val filteredCategories = MainActivity.arrCategoryData.filter { it.username == username }
+
+        val adapter = CategoryAdapter(this, filteredCategories)
+        rv.adapter = adapter
+    }
+
     override fun onBackPressed() {
 
     }
