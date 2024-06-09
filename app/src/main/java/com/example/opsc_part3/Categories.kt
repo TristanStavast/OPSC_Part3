@@ -13,8 +13,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 
 class Categories : AppCompatActivity() {
+
+    companion object {
+        val dbCat = Firebase.database
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -74,6 +80,13 @@ class Categories : AppCompatActivity() {
                     if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
                     {
                         MainActivity.arrCategoryData.add(CategoryData(user.username, catName.text.toString(), catDesc.text.toString()))
+
+                        val ref = dbCat.getReference("Category/" + (MainActivity.arrCategoryData.size + 1) + "/Username")
+                        ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
+                        val ref2 = dbCat.getReference("Category/" + (MainActivity.arrCategoryData.size + 1) + "/CategoryName")
+                        ref2.setValue(catName.text.toString())
+                        val ref3 = dbCat.getReference("Category/" + (MainActivity.arrCategoryData.size + 1) + "/Description")
+                        ref3.setValue(catDesc.text.toString())
                     }
                 }
             }

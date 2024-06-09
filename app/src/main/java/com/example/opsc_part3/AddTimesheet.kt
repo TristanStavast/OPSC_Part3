@@ -40,7 +40,7 @@ class AddTimesheet : AppCompatActivity() {
 
     companion object
     {
-        val db = Firebase.database
+        val dbTS = Firebase.database
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,25 +151,28 @@ class AddTimesheet : AppCompatActivity() {
             }
             else
             {
-                val ref = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Username")
+                val ref = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Username")
                 ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
-                val ref2 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TimesheetName")
+                val ref2 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TimesheetName")
                 ref2.setValue(name.text.toString())
-                val ref3 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Date")
+                val ref3 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Date")
                 ref3.setValue(txtDate.text.toString())
-                val ref4 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/StartTime")
+                val ref4 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/StartTime")
                 ref4.setValue(startTime.text.toString())
-                val ref5 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/EndTime")
+                val ref5 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/EndTime")
                 ref5.setValue(endTime.text.toString())
 
                 val totalTime = calculateTotalTime(startTime.text.toString(), endTime.text.toString())
-                val ref6 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TotalTime")
+                val ref6 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TotalTime")
                 ref6.setValue(totalTime)
 
-                val ref7 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Description")
+                val ref7 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Description")
                 ref7.setValue(desc.text.toString())
-                val ref8 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Image")
+                val ref8 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Image")
                 ref8.setValue(imgString)
+
+                MainActivity.arrTimeSheet.add(TimesheetData(MainActivity.userList[MainActivity.SignedIn].username, name.text.toString(),
+                    txtDate.text.toString(),startTime.text.toString(), endTime.text.toString(), totalTime, desc.text.toString(), imgString))
 
                 Toast.makeText(this, "Successfully added timesheet data", Toast.LENGTH_SHORT).show()
                 val int = Intent(this, TimesheetList::class.java)

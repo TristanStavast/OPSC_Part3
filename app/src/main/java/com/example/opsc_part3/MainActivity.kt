@@ -55,6 +55,50 @@ class MainActivity : AppCompatActivity() {
         ref3 = FirebaseDatabase.getInstance().getReference("Category")
         readDataFromFirebase()
 
+
+        // Main Code
+
+        var btnlogin : Button = findViewById(R.id.btnLogin)
+        var btnreg : Button = findViewById(R.id.btnRegister)
+
+        btnlogin.setOnClickListener()
+        {
+
+            var username : EditText = findViewById(R.id.txtUsername)
+            var password : EditText = findViewById(R.id.txtPassword)
+
+            var found = false
+
+            for(i in 0 until userList.size)
+            {
+                //error handling
+                if((username.text.toString().equals(userList[i].username)) && (password.text.toString().equals(
+                        userList[i].password)))
+                {
+                    Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_SHORT).show()
+
+                    found = true
+
+                    SignedIn = i
+                    val int = Intent(this, Home::class.java)
+                    startActivity(int)
+                    break
+                }
+            }
+            if(found == false)
+            {
+                username.setError("Please enter valid username!")
+                password.setError("Please enter valid password!")
+            }
+
+        }
+
+        btnreg.setOnClickListener()
+        {
+            val int = Intent(this, Register::class.java)
+            startActivity(int)
+        }
+
     }
 
     private fun readDataFromFirebase() {
@@ -123,51 +167,6 @@ class MainActivity : AppCompatActivity() {
                 //
             }
         })
-
-        MainCode(userList)
-    }
-
-    private fun MainCode(users: List<Users>) {
-
-        var btnlogin : Button = findViewById(R.id.btnLogin)
-        var btnreg : Button = findViewById(R.id.btnRegister)
-
-        btnlogin.setOnClickListener()
-        {
-
-            var username : EditText = findViewById(R.id.txtUsername)
-            var password : EditText = findViewById(R.id.txtPassword)
-
-            var found = false
-
-            for(i in 0 until users.size)
-            {
-                //error handling
-                if((username.text.toString().equals(users[i].username)) && (password.text.toString().equals(users[i].password)))
-                {
-                    Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_SHORT).show()
-
-                    found = true
-
-                    SignedIn = i
-                    val int = Intent(this, Home::class.java)
-                    startActivity(int)
-                    break
-                }
-            }
-            if(found == false)
-            {
-                username.setError("Please enter valid username!")
-                password.setError("Please enter valid password!")
-            }
-
-        }
-
-        btnreg.setOnClickListener()
-        {
-            val int = Intent(this, Register::class.java)
-            startActivity(int)
-        }
     }
 
     override fun onBackPressed() {
