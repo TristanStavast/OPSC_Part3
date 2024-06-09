@@ -170,6 +170,10 @@ class Profile : AppCompatActivity() {
                 val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Image")
                 ref5.setValue(imgString)
             }
+
+            Toast.makeText(this, "Profile changes have been saved", Toast.LENGTH_SHORT).show()
+            val int = Intent(this, Home::class.java)
+            startActivity(int)
         }
     }
 
