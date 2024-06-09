@@ -31,19 +31,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ListView
-            android:id="@+id/lstTimesheets"
-            android:layout_width="364dp"
-            android:layout_height="532dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="105dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="94dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <Button
             android:id="@+id/btnAddTimesheet"
             android:layout_width="wrap_content"
@@ -92,6 +79,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.063" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTimesheet"
+            android:layout_width="408dp"
+            android:layout_height="505dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="107dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="119dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

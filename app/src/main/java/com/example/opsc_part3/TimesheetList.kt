@@ -1,5 +1,6 @@
 package com.example.opsc_part3
 
+import TimesheetAdapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -23,12 +24,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 
 class TimesheetList : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
-    var arrList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,20 +75,14 @@ class TimesheetList : AppCompatActivity() {
 
         // Main Code
 
-        for (entry in MainActivity.arrTimeSheet)
-        {
-            if (entry.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
-            {
-                arrList.add("Timesheet Name: " + entry.tsName + "\nDate: " + entry.date + "\nStart Time: " +
-                        entry.sTime + "\nEnd Time: " + entry.eTime + "\nTime Spent: " + entry.totalTime +
-                            "\nDescription: " + entry.description)
-            }
-        }
+        val rvTS: RecyclerView = findViewById(R.id.rvTimesheet)
 
-        val listbox : ListView = findViewById(R.id.lstTimesheets)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrList)
-        listbox.adapter = adapter
-        adapter.notifyDataSetChanged()
+        val username = MainActivity.userList[MainActivity.SignedIn].username
+        val filteredTimesheets = MainActivity.arrTimeSheet.filter { it.username == username }
+
+        val adapter = TimesheetAdapter(this, filteredTimesheets)
+        rvTS.adapter = adapter
+        rvTS.layoutManager = LinearLayoutManager(this)
 
 
         val btnaddtime : Button = findViewById(R.id.btnAddTimesheet)
