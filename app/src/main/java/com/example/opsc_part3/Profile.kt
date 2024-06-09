@@ -22,6 +22,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
@@ -84,6 +86,7 @@ class Profile : AppCompatActivity() {
         var email : EditText = findViewById(R.id.txtProfileEmail)
         var password : EditText = findViewById(R.id.txtChangePassword)
         var fullname : EditText = findViewById(R.id.txtFullName)
+        btnImage = findViewById(R.id.ibtnAddImage)
 
         for (user in MainActivity.userList)
         {
@@ -107,10 +110,14 @@ class Profile : AppCompatActivity() {
                     fullname.setText(user.fullname)
                 }
                 password.setText(user.password)
+
+                if (user.image != null)
+                {
+
+                }
             }
         }
 
-        btnImage = findViewById(R.id.ibtnAddImage)
         btnImage.setOnClickListener()
         {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
