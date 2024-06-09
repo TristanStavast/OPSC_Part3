@@ -81,8 +81,6 @@ class Categories : AppCompatActivity() {
                 {
                     if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
                     {
-                        MainActivity.arrCategoryData.add(CategoryData(user.username, catName.text.toString(), catDesc.text.toString()))
-
                         val ref = dbCat.getReference("Category/" + (MainActivity.arrCategoryData.size + 1) + "/Username")
                         ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
                         val ref2 = dbCat.getReference("Category/" + (MainActivity.arrCategoryData.size + 1) + "/CategoryName")

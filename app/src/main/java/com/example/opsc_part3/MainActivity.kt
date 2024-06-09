@@ -154,8 +154,8 @@ class MainActivity : AppCompatActivity() {
                 arrCategoryData.clear()
                 for (catSnapshot in snapshot.children) {
                     val username = catSnapshot.child("Username").getValue(String::class.java)
-                    val catName = catSnapshot.child("Password").getValue(String::class.java)
-                    val catDesc = catSnapshot.child("Email").getValue(String::class.java)
+                    val catName = catSnapshot.child("CategoryName").getValue(String::class.java)
+                    val catDesc = catSnapshot.child("Description").getValue(String::class.java)
                     if (username != null && catName != null && catDesc != null) {
                         val arrcategories = CategoryData(username, catName, catDesc)
                         arrCategoryData.add(arrcategories)
