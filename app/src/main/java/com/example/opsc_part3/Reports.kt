@@ -20,7 +20,7 @@ class Reports : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_reports)
 
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
