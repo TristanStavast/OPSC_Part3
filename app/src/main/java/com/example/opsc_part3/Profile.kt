@@ -129,15 +129,15 @@ class Profile : AppCompatActivity() {
 
             if (save == true)
             {
-                val ref = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/Username")
+                val ref = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Username")
                 ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
-                val ref2 = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/Password")
+                val ref2 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Password")
                 ref2.setValue(password.text.toString())
-                val ref3 = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/Email")
+                val ref3 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Email")
                 ref3.setValue(email.text.toString())
-                val ref4 = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/FullName")
+                val ref4 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/FullName")
                 ref4.setValue(fullname.text.toString())
-                val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/Image")
+                val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Image")
                 ref5.setValue("")
             }
         }
