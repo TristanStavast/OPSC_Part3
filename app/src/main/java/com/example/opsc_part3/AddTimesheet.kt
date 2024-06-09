@@ -66,6 +66,7 @@ class AddTimesheet : AppCompatActivity() {
         //Intents
         navView.setNavigationItemSelectedListener {
             val timeint = Intent(this, TimesheetList::class.java)
+            val categint = Intent(this, Categories::class.java)
             val homeint = Intent(this, Home::class.java)
             val logout = Intent(this, MainActivity::class.java)
             val profile = Intent(this, Profile::class.java)
@@ -75,7 +76,7 @@ class AddTimesheet : AppCompatActivity() {
                 R.id.nav_settings -> Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
                 R.id.nav_report -> Toast.makeText(applicationContext, "Clicked Report", Toast.LENGTH_SHORT).show()
                 R.id.nav_timesheet -> startActivity(timeint)
-                R.id.nav_categories -> Toast.makeText(applicationContext, "Clicked Categories", Toast.LENGTH_SHORT).show()
+                R.id.nav_categories -> startActivity(categint)
                 R.id.nav_profile -> startActivity(profile)
                 R.id.nav_logout -> startActivity(logout)
             }
