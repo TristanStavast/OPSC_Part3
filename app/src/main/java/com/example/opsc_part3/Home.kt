@@ -82,6 +82,12 @@ class Home : AppCompatActivity() {
             }
         }
 
+        imgUser.setOnClickListener()
+        {
+            val int = Intent(this, Profile::class.java)
+            startActivity(int)
+        }
+
         var clock : ImageButton = findViewById(R.id.btnClock)
         clock.setOnClickListener()
         {
