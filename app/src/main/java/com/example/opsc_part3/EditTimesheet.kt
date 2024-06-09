@@ -115,7 +115,7 @@ class EditTimesheet : AppCompatActivity() {
         var tsdesc : EditText = findViewById(R.id.txtTsDescription)
         var tsdate : EditText = findViewById(R.id.txtTsDate)
         var tstotaltime : EditText = findViewById(R.id.txtTsTotalTime)
-        var btnImage : ImageButton = findViewById(R.id.btnAddTsImage)
+        btnImage = findViewById(R.id.btnAddTsImage)
 
         for (ts in MainActivity.arrTimeSheet)
         {
