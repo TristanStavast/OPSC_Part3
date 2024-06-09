@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -15,6 +18,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class Timer : AppCompatActivity() {
 
@@ -22,6 +30,11 @@ class Timer : AppCompatActivity() {
     private var seconds = 0
     private var running = false
     private var wasRunning = false
+
+    companion object {
+        val dbTimer = Firebase.database
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -92,6 +105,81 @@ class Timer : AppCompatActivity() {
             running = false
             seconds = 0
         }
+
+        val items = ArrayList<String?>()
+        for (user in MainActivity.userList)
+        {
+            if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+            {
+                for (cat in MainActivity.arrCategoryData)
+                {
+                    if (user.username.equals(cat.username))
+                    {
+                        items.add(cat.CategoryName)
+                    }
+                }
+            }
+        }
+
+        val cat : AutoCompleteTextView = findViewById(R.id.cmbCategory)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+        cat.setAdapter(adapter)
+
+        cat.inputType = 0
+        cat.setOnClickListener()
+        {
+            cat.showDropDown()
+        }
+
+
+        // Main Code
+        val btnaddtimes : Button = findViewById(R.id.btnAddTimes)
+        btnaddtimes.setOnClickListener()
+        {
+            val name : EditText = findViewById(R.id.txtAddTimeName)
+            val desc : EditText = findViewById(R.id.txtTimeDescription)
+            var txtStopWatch : TextView = findViewById(R.id.txtStopwatch)
+            val isTimesheetExists = CheckIfExists.isTimesheetExists(MainActivity.userList[MainActivity.SignedIn].username, name.text.toString(), MainActivity.arrTimeSheet)
+
+            if ((name.text.toString().equals("")) ||  (desc.text.toString().equals("")) || (cat.text.toString().equals("")))
+            {
+                name.error = "Please enter all fields!"
+                desc.error = "Please enter all fields!"
+                cat.error = "Please select a category"
+            }
+            else if (isTimesheetExists)
+            {
+                name.error = "Timesheet name already exists."
+            }
+            else
+            {
+                val ref = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Username")
+                ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
+                val ref2 = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TimesheetName")
+                ref2.setValue(name.text.toString())
+                val ref3 = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Category")
+                ref3.setValue(cat.text.toString())
+                val ref4 = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Date")
+                ref4.setValue(getTodaysDate())
+                val ref5 = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/StartTime")
+                ref5.setValue("")
+                val ref6 = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/EndTime")
+                ref6.setValue("")
+
+                val ref7 = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TotalTime")
+                ref7.setValue(formatTime(txtStopWatch.text.toString()))
+
+                val ref8 = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Description")
+                ref8.setValue(desc.text.toString())
+                val ref9 = dbTimer.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Image")
+                ref9.setValue("")
+
+                Toast.makeText(this, "Successfully added timesheet data", Toast.LENGTH_SHORT).show()
+                val int = Intent(this, TimesheetList::class.java)
+                startActivity(int)
+            }
+        }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -141,4 +229,30 @@ class Timer : AppCompatActivity() {
             }
         })
     }
+
+    fun getTodaysDate(): String {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        return dateFormat.format(calendar.time)
+    }
+
+    fun formatTime(timeString: String): String {
+        val parts = timeString.split(":")
+        val hours = parts[0].toInt()
+        val minutes = parts[1].toInt()
+        val seconds = parts[2].toInt()
+
+        val formattedTime = StringBuilder()
+
+        if (hours > 0) {
+            formattedTime.append(hours)
+            formattedTime.append("h ")
+        }
+
+        formattedTime.append(minutes)
+        formattedTime.append("m")
+
+        return formattedTime.toString()
+    }
+
 }
