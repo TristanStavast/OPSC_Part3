@@ -66,6 +66,15 @@ class Home : AppCompatActivity() {
         }
         var welcome: TextView = findViewById(R.id.txtWelcome)
         welcome.setText("Welcome, " + uname)
+
+
+        var clock : ImageButton = findViewById(R.id.btnClock)
+        clock.setOnClickListener()
+        {
+            val clockint = Intent(this, Timer::class.java)
+            startActivity(clockint)
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
