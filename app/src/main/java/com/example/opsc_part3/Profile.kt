@@ -1,7 +1,13 @@
 package com.example.opsc_part3
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Button
@@ -17,11 +23,16 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.util.regex.Pattern
 
 class Profile : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var btnImage: ImageButton
+    private val PICK_IMAGE = 1
+    private var imgString: String = ""
 
     companion object
     {
@@ -99,6 +110,13 @@ class Profile : AppCompatActivity() {
             }
         }
 
+        btnImage = findViewById(R.id.ibtnAddImage)
+        btnImage.setOnClickListener()
+        {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, PICK_IMAGE)
+        }
+
         var saveChanges : Button = findViewById(R.id.btnSaveChanges)
         saveChanges.setOnClickListener()
         {
@@ -123,6 +141,7 @@ class Profile : AppCompatActivity() {
                     }
 
                     user.password = password.text.toString()
+                    user.image = imgString
                     save = true
                 }
             }
@@ -138,7 +157,24 @@ class Profile : AppCompatActivity() {
                 val ref4 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/FullName")
                 ref4.setValue(fullname.text.toString())
                 val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Image")
-                ref5.setValue("")
+                ref5.setValue(imgString)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            val selectedImage: Uri? = data?.data
+            if (selectedImage != null) {
+                val imageStream: InputStream? = contentResolver.openInputStream(selectedImage)
+                val bitmap: Bitmap = BitmapFactory.decodeStream(imageStream)
+                btnImage.setImageBitmap(bitmap)
+
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                val byteArray = byteArrayOutputStream.toByteArray()
+                imgString = Base64.encodeToString(byteArray, Base64.DEFAULT)
             }
         }
     }

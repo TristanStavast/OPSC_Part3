@@ -69,7 +69,7 @@
             app:srcCompat="@android:drawable/stat_sys_upload" />
 
         <TextView
-            android:id="@+id/lblAddImage"
+            android:id="@+id/lblChangeImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="160dp"
