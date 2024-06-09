@@ -143,6 +143,10 @@ class AddTimesheet : AppCompatActivity() {
                 ref7.setValue(desc.text.toString())
                 val ref8 = Register.db.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Image")
                 ref8.setValue(imgString)
+
+                Toast.makeText(this, "Successfully added timesheet data", Toast.LENGTH_SHORT).show()
+                val int = Intent(this, TimesheetList::class.java)
+                startActivity(int)
             }
         }
 

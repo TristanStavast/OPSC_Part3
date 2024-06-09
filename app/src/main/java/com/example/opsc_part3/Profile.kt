@@ -15,11 +15,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import java.util.regex.Pattern
 
 class Profile : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
+
+    companion object
+    {
+        val dbref = Firebase.database
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -95,6 +102,7 @@ class Profile : AppCompatActivity() {
         var saveChanges : Button = findViewById(R.id.btnSaveChanges)
         saveChanges.setOnClickListener()
         {
+            var save = false
             for (user in MainActivity.userList)
             {
                 if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
@@ -106,6 +114,7 @@ class Profile : AppCompatActivity() {
                     else if ((email.text.toString() != "") && (!isValidEmail(email)))
                     {
                         email.setError("Email is not in the right format")
+                        save = false
                         break
                     }
                     if (fullname.text.toString() != "")
@@ -114,7 +123,22 @@ class Profile : AppCompatActivity() {
                     }
 
                     user.password = password.text.toString()
+                    save = true
                 }
+            }
+
+            if (save == true)
+            {
+                val ref = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/Username")
+                ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
+                val ref2 = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/Password")
+                ref2.setValue(password.text.toString())
+                val ref3 = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/Email")
+                ref3.setValue(email.text.toString())
+                val ref4 = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/FullName")
+                ref4.setValue(fullname.text.toString())
+                val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn) + "/Image")
+                ref5.setValue("")
             }
         }
     }

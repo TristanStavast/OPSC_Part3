@@ -47,6 +47,12 @@ class Register : AppCompatActivity() {
                 ref.setValue(uname.text.toString())
                 val ref2 = db.getReference("Users/" + (MainActivity.userList.size + 1) + "/Password")
                 ref2.setValue(pass.text.toString())
+                val ref3 = db.getReference("Users/" + (MainActivity.userList.size + 1) + "/Email")
+                ref3.setValue("")
+                val ref4 = db.getReference("Users/" + (MainActivity.userList.size + 1) + "/FullName")
+                ref4.setValue("")
+                val ref5 = db.getReference("Users/" + (MainActivity.userList.size + 1) + "/Image")
+                ref5.setValue("")
 
                 Toast.makeText(this, "Successfully registered! Please login.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)

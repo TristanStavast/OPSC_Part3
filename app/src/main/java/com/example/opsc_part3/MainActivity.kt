@@ -60,8 +60,11 @@ class MainActivity : AppCompatActivity() {
                 for (userSnapshot in snapshot.children) {
                     val username = userSnapshot.child("Username").getValue(String::class.java)
                     val password = userSnapshot.child("Password").getValue(String::class.java)
-                    if (username != null && password != null) {
-                        val user = Users(username, password)
+                    val email = userSnapshot.child("Email").getValue(String::class.java)
+                    val fullname = userSnapshot.child("FullName").getValue(String::class.java)
+                    val image = userSnapshot.child("Image").getValue(String::class.java)
+                    if (username != null && password != null && email != null && fullname != null && image != null) {
+                        val user = Users(username, password, email, fullname, image)
                         userList.add(user)
                     }
                 }
