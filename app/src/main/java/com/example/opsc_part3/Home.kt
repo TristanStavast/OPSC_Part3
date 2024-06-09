@@ -1,5 +1,6 @@
 package com.example.opsc_part3
 
+import TimesheetAdapter
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -18,6 +19,8 @@ import com.google.android.material.navigation.NavigationView
 import org.w3c.dom.Text
 import android.graphics.BitmapFactory
 import android.util.Base64
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class Home : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
@@ -66,6 +69,16 @@ class Home : AppCompatActivity() {
         }
 
         // Main Code
+
+        val rvDash: RecyclerView = findViewById(R.id.rvDashboard)
+
+        val username = MainActivity.userList[MainActivity.SignedIn].username
+        val filteredTimesheets = MainActivity.arrTimeSheet.filter { it.username == username }
+
+        val adapter = TimesheetAdapter(this, filteredTimesheets)
+        rvDash.adapter = adapter
+        rvDash.layoutManager = LinearLayoutManager(this)
+
         var lblUN : TextView = findViewById(R.id.lblDashUsername)
         var imgUser : ImageView = findViewById(R.id.imgUserImage)
         for (user in MainActivity.userList)
