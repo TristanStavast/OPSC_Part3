@@ -47,13 +47,14 @@ class Timer : AppCompatActivity() {
             val timeint = Intent(this, TimesheetList::class.java)
             val homeint = Intent(this, Home::class.java)
             val logout = Intent(this, MainActivity::class.java)
+            val intcat = Intent(this, Categories::class.java)
 
             when(it.itemId){
                 R.id.nav_home -> startActivity(homeint)
                 R.id.nav_settings -> Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
                 R.id.nav_report -> Toast.makeText(applicationContext, "Clicked Report", Toast.LENGTH_SHORT).show()
                 R.id.nav_timesheet -> startActivity(timeint)
-                R.id.nav_categories -> Toast.makeText(applicationContext, "Clicked Categories", Toast.LENGTH_SHORT).show()
+                R.id.nav_categories -> startActivity(intcat)
                 R.id.nav_logout -> startActivity(logout)
             }
             true
