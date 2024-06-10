@@ -42,7 +42,7 @@ class TimesheetAdapter(private var context: Context, private var timesheetList: 
 
             // Set header text
             headerViewHolder.headerTimesheetName.text = "Name"
-            headerViewHolder.headerDate.text = "Date"
+            headerViewHolder.headerDate.text = "Modified Date"
             headerViewHolder.headerTotalTime.text = "Total Time"
         } else {
             val currentItem = timesheetList[position - 1] // Subtract 1 to account for header

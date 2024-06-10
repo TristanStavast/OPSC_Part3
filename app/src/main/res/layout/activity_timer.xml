@@ -186,17 +186,25 @@
             android:id="@+id/btnAddTimes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="133dp"
-            android:layout_marginTop="650dp"
-            android:layout_marginEnd="132dp"
-            android:layout_marginBottom="33dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="588dp"
+            android:layout_marginEnd="108dp"
+            android:layout_marginBottom="95dp"
             android:backgroundTint="#3C9A14"
-            android:text="Add Timesheet"
+            android:text="Add/Modify Timesheet"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create New or Select Existing:"
+            tools:layout_editor_absoluteX="87dp"
+            tools:layout_editor_absoluteY="354dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
