@@ -25,12 +25,13 @@ import java.io.InputStream
 import java.util.regex.Pattern
 
 class Profile : AppCompatActivity() {
-
+    //Variables for the profile page
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
     private var imgString: String? = ""
 
+    //Database companion object
     companion object
     {
         val dbref = Firebase.database
@@ -65,6 +66,7 @@ class Profile : AppCompatActivity() {
             val logout = Intent(this, MainActivity::class.java)
             val reports = Intent(this, Reports::class.java)
 
+            //Intents for each page under burger menu
             when(it.itemId){
                 R.id.nav_home -> startActivity(homeint)
                 R.id.nav_report -> startActivity(reports)
@@ -76,14 +78,14 @@ class Profile : AppCompatActivity() {
 
         }
 
-
-        // Main Code
+        //Variables needed for the profile to correctly store
         var username : EditText = findViewById(R.id.txtTsName)
         var email : EditText = findViewById(R.id.txtTsDescription)
         var password : EditText = findViewById(R.id.txtTsTotalTime)
         var fullname : EditText = findViewById(R.id.txtTsDate)
         btnImage = findViewById(R.id.btnAddTsImage)
 
+        //Error handling to check user array
         for (user in MainActivity.userList)
         {
             if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
@@ -117,19 +119,20 @@ class Profile : AppCompatActivity() {
                 }
             }
         }
-
+        //Intenting to profile page through image
         btnImage.setOnClickListener()
         {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, PICK_IMAGE)
         }
-
+        //Saving changes made on profile
         var saveChanges : Button = findViewById(R.id.btnTsSaveChanges)
         saveChanges.setOnClickListener()
         {
             var save = false
             for (user in MainActivity.userList)
             {
+                //Error handling to check if array list equals database
                 if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
                 {
                     if ((email.text.toString() != "") && (isValidEmail(email)))
@@ -152,7 +155,7 @@ class Profile : AppCompatActivity() {
                     save = true
                 }
             }
-
+            //Saving to database
             if (save == true)
             {
                 val ref = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Username")
@@ -171,7 +174,7 @@ class Profile : AppCompatActivity() {
             val int = Intent(this, Home::class.java)
             startActivity(int)
         }
-
+        //Delete profile button
         val btndeleteprofile : Button = findViewById(R.id.btnDeleteProfile)
         btndeleteprofile.setOnClickListener()
         {
@@ -193,7 +196,7 @@ class Profile : AppCompatActivity() {
 
 
     }
-
+    //Decoding image method
     private fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {
         return try {
             val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
@@ -203,7 +206,7 @@ class Profile : AppCompatActivity() {
             null
         }
     }
-
+    //Method to display image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
@@ -220,7 +223,7 @@ class Profile : AppCompatActivity() {
             }
         }
     }
-
+    //checking if email is valid
     fun isValidEmail(editText: EditText): Boolean {
         val emailPattern = Pattern.compile(
             "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
@@ -229,7 +232,7 @@ class Profile : AppCompatActivity() {
         val email = editText.text.toString().trim()
         return emailPattern.matcher(email).matches()
     }
-
+    //Toggle for combobox
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)){
 

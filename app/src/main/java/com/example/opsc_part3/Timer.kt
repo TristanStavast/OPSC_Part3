@@ -24,12 +24,14 @@ import java.util.Locale
 
 class Timer : AppCompatActivity() {
 
+    //Variables for timer to function correctly
     lateinit var toggle: ActionBarDrawerToggle
     private var seconds = 0
     private var running = false
     private var wasRunning = false
     private var counter: Int = 0
 
+    //Companion object for realtime database
     companion object {
         val dbTimer = Firebase.database
     }
@@ -54,7 +56,7 @@ class Timer : AppCompatActivity() {
             }
         }
 
-        //Intents
+        //Intents for different pages
         navView.setNavigationItemSelectedListener {
             val timeint = Intent(this, TimesheetList::class.java)
             val homeint = Intent(this, Home::class.java)
@@ -63,6 +65,7 @@ class Timer : AppCompatActivity() {
             val reports = Intent(this, Reports::class.java)
             val profile = Intent(this, Profile::class.java)
 
+            //Intents for burger menu on different pages
             when(it.itemId){
                 R.id.nav_home -> startActivity(homeint)
                 R.id.nav_profile -> startActivity(profile)
@@ -79,16 +82,17 @@ class Timer : AppCompatActivity() {
         var btnstop : Button = findViewById(R.id.btnStop)
         var btnreset : Button = findViewById(R.id.btnReset)
 
+        //Error handling to check in what state the timer is in
         if(savedInstanceState != null)
         {
             seconds = savedInstanceState.getInt("seconds")
             running = savedInstanceState.getBoolean("running")
             wasRunning = savedInstanceState.getBoolean("wasRunning")
         }
-
+        //Run timer
         runTimer()
 
-
+        //Buttons to start the corresponding functions
         btnstart.setOnClickListener()
         {
             running = true
@@ -103,6 +107,7 @@ class Timer : AppCompatActivity() {
             seconds = 0
         }
 
+        //Array to add timer data to categories
         val items = ArrayList<String?>()
         for (user in MainActivity.userList)
         {
@@ -122,13 +127,14 @@ class Timer : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
         cat.setAdapter(adapter)
 
+        //ComboBox for categories
         cat.inputType = 0
         cat.setOnClickListener()
         {
             cat.showDropDown()
         }
 
-
+        //Adding more categories per user
         val items2 = ArrayList<String?>()
         for (user in MainActivity.userList)
         {
@@ -154,6 +160,7 @@ class Timer : AppCompatActivity() {
             var txtStopWatch : TextView = findViewById(R.id.txtStopwatch)
             val isTimesheetExists = CheckIfExists.isTimesheetExists(MainActivity.userList[MainActivity.SignedIn].username, name.text.toString(), MainActivity.arrTimeSheet)
 
+            //Error handling to ensure all fields are entered
             if ((name.text.toString().equals("")) ||  (desc.text.toString().equals("")) || (cat.text.toString().equals("")))
             {
                 name.error = "Please enter all fields!"
@@ -164,6 +171,7 @@ class Timer : AppCompatActivity() {
             {
                 for (i in 0 until MainActivity.arrTimeSheet.size)
                 {
+                    //Adding data to the database
                     if ((MainActivity.userList[MainActivity.SignedIn].username.equals(MainActivity.arrTimeSheet[i].username)) &&
                         (name.text.toString().equals(MainActivity.arrTimeSheet[i].tsName)))
                     {
@@ -228,20 +236,21 @@ class Timer : AppCompatActivity() {
 
     }
 
+    //Saving instance for timer
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("seconds", seconds)
         outState.putBoolean("running", running)
         outState.putBoolean("wasRunning", wasRunning)
     }
-
+    //Method for paused timer
     override fun onPause()
     {
         super.onPause()
         wasRunning = running
         running = false
     }
-
+    //Method for resumption of timer
     override fun onResume() {
         super.onResume()
         if(wasRunning)
@@ -250,20 +259,24 @@ class Timer : AppCompatActivity() {
         }
     }
 
+    //Method to ensure timer runs correctly
     private fun runTimer()
     {
-
+        //Variables for timer
         var txtstopwatch : TextView = findViewById(R.id.txtStopwatch)
 
         val handler = Handler()
         handler.post(object : Runnable
         {
+            //Code block to make the code run
             override fun run()
             {
+                //Calculations to ensure the timer displays correctly
                 val hours = seconds / 3600
                 val minutes = (seconds % 3600) / 60
                 val secs = seconds % 60
 
+                //Formatting text for timer
                 val time = String.format("%02d:%02d:%02d", hours, minutes, secs)
                 txtstopwatch.text = time
 
@@ -275,13 +288,13 @@ class Timer : AppCompatActivity() {
             }
         })
     }
-
+    //Getting todays date for the timer
     fun getTodaysDate(): String {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return dateFormat.format(calendar.time)
     }
-
+    //Formatting time correctly
     fun formatTime(timeString: String): String {
         val parts = timeString.split(":")
         val hours = parts[0].toInt()
@@ -300,7 +313,7 @@ class Timer : AppCompatActivity() {
 
         return formattedTime.toString()
     }
-
+    //Adding the times to a string
     fun addTimeStrings(time1: String?, time2: String?): String {
         fun parseHourMinuteString(time: String?): Int {
             if (time == null) return 0
@@ -313,7 +326,7 @@ class Timer : AppCompatActivity() {
                 0
             }
         }
-
+        //Filling the database with the timer data
         fun parseColonTimeString(time: String?): Int {
             if (time == null) return 0
             val parts = time.split(":").map { it.toInt() }

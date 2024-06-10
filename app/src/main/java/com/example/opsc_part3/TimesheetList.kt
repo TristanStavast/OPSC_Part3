@@ -53,7 +53,7 @@ class TimesheetList : AppCompatActivity() {
             }
         }
 
-        //Intents
+        //Intents for different pages
         navView.setNavigationItemSelectedListener {
             val homeint = Intent(this, Home::class.java)
             val logout = Intent(this, MainActivity::class.java)
@@ -61,6 +61,7 @@ class TimesheetList : AppCompatActivity() {
             val categint = Intent(this, Categories::class.java)
             val reports = Intent(this, Reports::class.java)
 
+            //Creating intents in the burger menu
             when(it.itemId){
                 R.id.nav_home -> startActivity(homeint)
                 R.id.nav_report -> startActivity(reports)
@@ -72,14 +73,12 @@ class TimesheetList : AppCompatActivity() {
 
         }
 
-
-        // Main Code
-
         val rvTS: RecyclerView = findViewById(R.id.rvTimesheet)
 
         val username = MainActivity.userList[MainActivity.SignedIn].username
         val filteredTimesheets = MainActivity.arrTimeSheet.filter { it.username == username }
 
+        //Filling user adapter
         val adapter = TimesheetAdapter(this, filteredTimesheets)
         rvTS.adapter = adapter
         rvTS.layoutManager = LinearLayoutManager(this)
@@ -88,12 +87,13 @@ class TimesheetList : AppCompatActivity() {
         val btnaddtime : Button = findViewById(R.id.btnAddTimesheet)
         val btntimer : Button = findViewById(R.id.btnTimer)
 
+        //Add time button method
         btnaddtime.setOnClickListener()
         {
             val int = Intent(this, AddTimesheet::class.java)
             startActivity(int)
         }
-
+        //Add timer method
         btntimer.setOnClickListener()
         {
             val int = Intent(this, Timer::class.java)
@@ -101,6 +101,7 @@ class TimesheetList : AppCompatActivity() {
         }
     }
 
+    //Setting toggle for burger menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)){
 

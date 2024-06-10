@@ -15,6 +15,7 @@ import com.google.firebase.database.database
 
 class Register : AppCompatActivity() {
 
+    //Companion object for database
     companion object
     {
         val db = Firebase.database
@@ -38,7 +39,7 @@ class Register : AppCompatActivity() {
             var pass: EditText = findViewById(R.id.txtRegPassword)
             val isUsernameExists = CheckIfExists.isUsernameExists(uname.text.toString(), MainActivity.userList)
 
-            //error handling
+            //error handling for registration
             if ((uname.text.toString().equals("")) || (pass.text.toString().equals(""))) {
                 uname.error = "Please enter valid username!"
                 pass.error = "Please enter valid password!"
@@ -64,7 +65,7 @@ class Register : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
+        //Intent to the home page of application
         var btnLogin : Button = findViewById(R.id.btnNavLogin)
         btnLogin.setOnClickListener()
         {

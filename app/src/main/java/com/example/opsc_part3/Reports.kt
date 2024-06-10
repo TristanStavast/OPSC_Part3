@@ -22,6 +22,7 @@ import java.util.Date
 import java.util.Locale
 
 class Reports : AppCompatActivity() {
+    //Variables for the report page
     private lateinit var txtStartDate: EditText
     private lateinit var txtEndDate: EditText
     private lateinit var adapter: TimesheetAdapter
@@ -53,6 +54,7 @@ class Reports : AppCompatActivity() {
             val categint = Intent(this, Categories::class.java)
             val logout = Intent(this, MainActivity::class.java)
 
+            //Intents to different pages
             when (it.itemId) {
                 R.id.nav_home -> startActivity(homeint)
                 R.id.nav_profile -> startActivity(profile)
@@ -66,6 +68,8 @@ class Reports : AppCompatActivity() {
         val rvReport: RecyclerView = findViewById(R.id.rvReport)
         val username = MainActivity.userList[MainActivity.SignedIn].username
         val filteredTimesheets = MainActivity.arrTimeSheet.filter { it.username == username }
+
+        //Filling the adapter to display the reports
         adapter = TimesheetAdapter(this, filteredTimesheets)
         rvReport.adapter = adapter
         rvReport.layoutManager = LinearLayoutManager(this)
@@ -85,7 +89,7 @@ class Reports : AppCompatActivity() {
             filterTimesheets()
         }
     }
-
+    //Showing the datepicker dialog
     private fun showDatePickerDialog(txt: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -99,20 +103,20 @@ class Reports : AppCompatActivity() {
 
         datePickerDialog.show()
     }
-
+    //Filtering timesheets
     private fun filterTimesheets() {
         val startDateStr = txtStartDate.text.toString()
         val endDateStr = txtEndDate.text.toString()
-
+        //Error handling to ensure all fields are correctly entered
         if (startDateStr.isEmpty() || endDateStr.isEmpty()) {
             Toast.makeText(this, "Please select both start and end dates", Toast.LENGTH_SHORT).show()
             return
         }
-
+        //More formatting
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val startDate: Date? = sdf.parse(startDateStr)
         val endDate: Date? = sdf.parse(endDateStr)
-
+        //Error handling
         if (startDate != null && endDate != null) {
             val username = MainActivity.userList[MainActivity.SignedIn].username
             val filteredTimesheets = MainActivity.arrTimeSheet.filter {
@@ -121,7 +125,7 @@ class Reports : AppCompatActivity() {
             adapter.updateData(filteredTimesheets)
         }
     }
-
+    //Checking if date is in range
     private fun isDateInRange(dateStr: String?, startDate: Date, endDate: Date, sdf: SimpleDateFormat): Boolean {
         return try {
             val date = sdf.parse(dateStr)

@@ -1,5 +1,5 @@
 package com.example.opsc_part3
-
+//Data calss to set properties of all timesheet data
 data class TimesheetData (
     var username : String? = null,
     var tsName : String? = null,
