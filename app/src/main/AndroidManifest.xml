@@ -13,29 +13,40 @@
         android:theme="@style/Theme.OPSC_Part3"
         tools:targetApi="31">
         <activity
-            android:name=".EditTimesheet"
+            android:name=".TetrisGame"
             android:exported="false" />
+        <activity
+            android:name=".EditTimesheet"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Reports"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Settings"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Categories"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Profile"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Timer"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddTimesheet"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TimesheetList"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Timesheet"
             android:exported="false" />
@@ -45,13 +56,16 @@
             android:theme="@style/Theme.OPSC_Part3" />
         <activity
             android:name=".Register"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Home"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

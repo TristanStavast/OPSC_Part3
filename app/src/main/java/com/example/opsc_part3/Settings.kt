@@ -1,18 +1,27 @@
 package com.example.opsc_part3
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Switch
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.opsc_part3.databinding.ActivityMainBinding
+import com.google.android.gms.common.internal.Objects
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class Settings : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -53,6 +62,10 @@ class Settings : AppCompatActivity() {
             true
 
         }
+
+
+
+
     }
     override fun onBackPressed() {
 
