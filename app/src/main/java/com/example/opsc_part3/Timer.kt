@@ -129,11 +129,36 @@ class Timer : AppCompatActivity() {
         }
 
 
+        val items2 = ArrayList<String?>()
+        for (user in MainActivity.userList)
+        {
+            if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
+            {
+                for (ts in MainActivity.arrTimeSheet)
+                {
+                    if (user.username.equals(ts.username))
+                    {
+                        items2.add(ts.tsName)
+                    }
+                }
+            }
+        }
+
+        val name : AutoCompleteTextView = findViewById(R.id.cmbTsNames)
+        val adapter2 = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items2)
+        name.setAdapter(adapter2)
+
+        name.inputType = 0
+        name.setOnClickListener()
+        {
+            name.showDropDown()
+        }
+
+
         // Main Code
         val btnaddtimes : Button = findViewById(R.id.btnAddTimes)
         btnaddtimes.setOnClickListener()
         {
-            val name : EditText = findViewById(R.id.txtAddTimeName)
             val desc : EditText = findViewById(R.id.txtTimeDescription)
             var txtStopWatch : TextView = findViewById(R.id.txtStopwatch)
             val isTimesheetExists = CheckIfExists.isTimesheetExists(MainActivity.userList[MainActivity.SignedIn].username, name.text.toString(), MainActivity.arrTimeSheet)
