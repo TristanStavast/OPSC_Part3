@@ -29,6 +29,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 
 class AddTimesheet : AppCompatActivity() {
+    //Private Variables
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
@@ -38,6 +39,7 @@ class AddTimesheet : AppCompatActivity() {
     private lateinit var startTime : EditText
     private lateinit var endTime : EditText
 
+    //Creating variable for Firebase database
     companion object
     {
         val dbTS = Firebase.database
@@ -46,7 +48,7 @@ class AddTimesheet : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Make the activity fullscreen
+        //Make the activity fullscreen
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -57,6 +59,7 @@ class AddTimesheet : AppCompatActivity() {
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
 
+        //Navigation drawer button
         val openDrawer : ImageButton = findViewById(R.id.btnNav)
         openDrawer.setOnClickListener()
         {
@@ -65,7 +68,7 @@ class AddTimesheet : AppCompatActivity() {
             }
         }
 
-        //Intents
+        //Intents for navigation drawer
         navView.setNavigationItemSelectedListener {
             val timeint = Intent(this, TimesheetList::class.java)
             val categint = Intent(this, Categories::class.java)
@@ -88,9 +91,7 @@ class AddTimesheet : AppCompatActivity() {
 
         }
 
-
-        // Main Code
-
+        //Main Code
         val items = ArrayList<String?>()
         for (user in MainActivity.userList)
         {
@@ -144,6 +145,7 @@ class AddTimesheet : AppCompatActivity() {
             val desc : EditText = findViewById(R.id.txtTimeDescription)
             val isTimesheetExists = CheckIfExists.isTimesheetExists(MainActivity.userList[MainActivity.SignedIn].username, name.text.toString(), MainActivity.arrTimeSheet)
 
+            //Making sure the user enters all fields
             if ((name.text.toString().equals("")) || (txtDate.text.toString().equals("")) || (startTime.text.toString().equals("")) || (endTime.text.toString().equals("")) || (desc.text.toString().equals("")) || (cat.text.toString().equals("")))
             {
                 name.error = "Please enter all fields!"
@@ -153,12 +155,14 @@ class AddTimesheet : AppCompatActivity() {
                 desc.error = "Please enter all fields!"
                 cat.error = "Please select a category"
             }
+            //Making sure 2 timesheets cant have the same name
             else if (isTimesheetExists)
             {
                 name.error = "Timesheet name already exists."
             }
             else
             {
+                //Adding values to the database
                 val ref = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/Username")
                 ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
                 val ref2 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TimesheetName")
@@ -172,6 +176,7 @@ class AddTimesheet : AppCompatActivity() {
                 val ref6 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/EndTime")
                 ref6.setValue(endTime.text.toString())
 
+                //Calculating the amount of hours
                 val totalTime = calculateTotalTime(startTime.text.toString(), endTime.text.toString())
                 val ref7 = dbTS.getReference("Timesheet/" + (MainActivity.arrTimeSheet.size + 1) + "/TotalTime")
                 ref7.setValue(totalTime)
@@ -213,6 +218,7 @@ class AddTimesheet : AppCompatActivity() {
         return true
     }
 
+    //Making date picker
     private fun showDatePickerDialog(txt: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -227,6 +233,7 @@ class AddTimesheet : AppCompatActivity() {
         datePickerDialog.show()
     }
 
+    //Setting the format
     private fun showTimePickerDialog(txt: EditText) {
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -240,6 +247,7 @@ class AddTimesheet : AppCompatActivity() {
         timePickerDialog.show()
     }
 
+    //Calculating total hours
     private fun calculateTotalTime(startTime: String, endTime: String): String {
         val startTimeParts = startTime.split(":")
         val endTimeParts = endTime.split(":")
