@@ -173,6 +173,27 @@ class Profile : AppCompatActivity() {
             val int = Intent(this, Home::class.java)
             startActivity(int)
         }
+
+        val btndeleteprofile : Button = findViewById(R.id.btnDeleteProfile)
+        btndeleteprofile.setOnClickListener()
+        {
+            val ref = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Username")
+            ref.setValue("")
+            val ref2 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Password")
+            ref2.setValue("")
+            val ref3 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Email")
+            ref3.setValue("")
+            val ref4 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/FullName")
+            ref4.setValue("")
+            val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Image")
+            ref5.setValue("")
+
+            Toast.makeText(this, "Profile deleted", Toast.LENGTH_SHORT).show()
+            val int = Intent(this, MainActivity::class.java)
+            startActivity(int)
+        }
+
+
     }
 
     private fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {

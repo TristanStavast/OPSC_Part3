@@ -63,9 +63,6 @@ class Settings : AppCompatActivity() {
 
         }
 
-
-
-
     }
     override fun onBackPressed() {
 
