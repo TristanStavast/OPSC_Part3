@@ -207,6 +207,7 @@
             android:background="@drawable/rounded_corner"
             android:clickable="true"
             android:focusable="false"
+            android:dropDownHeight="160dp"
             android:hint="Select a category"
             android:inputType="none"
             android:paddingLeft="12dp"

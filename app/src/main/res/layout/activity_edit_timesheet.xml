@@ -44,6 +44,7 @@
             android:hint="Select a category"
             android:inputType="none"
             android:paddingLeft="12dp"
+            android:dropDownHeight="160dp"
             android:textColor="@color/black"
             android:textColorHint="#65FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"

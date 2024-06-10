@@ -175,6 +175,7 @@
             android:background="@drawable/rounded_corner"
             android:clickable="true"
             android:focusable="false"
+            android:dropDownHeight="160dp"
             android:hint="Select a timesheet"
             android:inputType="none"
             android:paddingLeft="12dp"
