@@ -145,7 +145,7 @@ class Timer : AppCompatActivity() {
         }
 
         val name : AutoCompleteTextView = findViewById(R.id.cmbTsNames)
-        val adapter2 = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+        val adapter2 = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items2)
         name.setAdapter(adapter2)
 
         name.inputType = 0
