@@ -194,6 +194,10 @@
             android:id="@+id/cmbTsNames"
             android:layout_width="236dp"
             android:layout_height="33dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="373dp"
+            android:layout_marginEnd="87dp"
+            android:layout_marginBottom="325dp"
             android:background="@drawable/rounded_corner"
             android:clickable="true"
             android:focusable="false"
@@ -202,8 +206,10 @@
             android:paddingLeft="12dp"
             android:textColor="@color/black"
             android:textColorHint="#65FFFFFF"
-            tools:layout_editor_absoluteX="88dp"
-            tools:layout_editor_absoluteY="373dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

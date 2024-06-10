@@ -66,7 +66,15 @@ class Categories : AppCompatActivity() {
 
 
         // Main Code
-        rvLoad()
+        val rv: RecyclerView = findViewById(R.id.rvCategories)
+        rv.layoutManager = LinearLayoutManager(this)
+
+        val username = MainActivity.userList[MainActivity.SignedIn].username
+        val filteredCategories = MainActivity.arrCategoryData.filter { it.username == username }
+
+        val adapter = CategoryAdapter(this, filteredCategories)
+        rv.adapter = adapter
+
 
         var btnAdd : Button = findViewById(R.id.btnAddCategory)
         btnAdd.setOnClickListener()
@@ -102,22 +110,16 @@ class Categories : AppCompatActivity() {
                         startActivity(int)*/
                     }
                 }
+
+                /*val updateDataset = MainActivity.arrCategoryData.filter {
+                    it.username == username
+                  }
+                adapter.updateData(updateDataset)*/
+
                 catName.setText("")
                 catDesc.setText("")
             }
         }
-    }
-
-    private fun rvLoad()
-    {
-        val rv: RecyclerView = findViewById(R.id.rvCategories)
-        rv.layoutManager = LinearLayoutManager(this)
-
-        val username = MainActivity.userList[MainActivity.SignedIn].username
-        val filteredCategories = MainActivity.arrCategoryData.filter { it.username == username }
-
-        val adapter = CategoryAdapter(this, filteredCategories)
-        rv.adapter = adapter
     }
 
     override fun onBackPressed() {

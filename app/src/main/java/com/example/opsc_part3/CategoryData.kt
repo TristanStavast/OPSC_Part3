@@ -14,7 +14,7 @@ data class CategoryData(
     var Description: String? = null
 )
 
-class CategoryAdapter(private val context: Context, private val categoryList: List<CategoryData>) :
+class CategoryAdapter(private var context: Context, private var categoryList: List<CategoryData>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_HEADER = 0
@@ -52,6 +52,12 @@ class CategoryAdapter(private val context: Context, private val categoryList: Li
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) VIEW_TYPE_HEADER else VIEW_TYPE_ITEM
+    }
+
+    fun updateData(newCategory: List<CategoryData>)
+    {
+        categoryList = newCategory
+        notifyDataSetChanged()
     }
 }
 
