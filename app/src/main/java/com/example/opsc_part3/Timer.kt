@@ -61,13 +61,11 @@ class Timer : AppCompatActivity() {
             val logout = Intent(this, MainActivity::class.java)
             val intcat = Intent(this, Categories::class.java)
             val reports = Intent(this, Reports::class.java)
-            val settings = Intent(this, Settings::class.java)
             val profile = Intent(this, Profile::class.java)
 
             when(it.itemId){
                 R.id.nav_home -> startActivity(homeint)
                 R.id.nav_profile -> startActivity(profile)
-                R.id.nav_settings -> startActivity(settings)
                 R.id.nav_report -> startActivity(reports)
                 R.id.nav_timesheet -> startActivity(timeint)
                 R.id.nav_categories -> startActivity(intcat)
