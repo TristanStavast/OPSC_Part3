@@ -30,6 +30,7 @@ class Profile : AppCompatActivity() {
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
     private var imgString: String? = ""
+    private var counter = 0
 
     //Database companion object
     companion object
@@ -188,6 +189,48 @@ class Profile : AppCompatActivity() {
             ref4.setValue("")
             val ref5 = dbref.getReference("Users/" + (MainActivity.SignedIn + 1) + "/Image")
             ref5.setValue("")
+
+            for (i in 0 until MainActivity.arrCategoryData.size)
+            {
+                if (MainActivity.userList[MainActivity.SignedIn].username.equals(MainActivity.arrCategoryData[i].username))
+                {
+                    counter = i
+
+                    val ref = dbref.getReference("Category/" + (counter + 1) + "/Username")
+                    ref.setValue("")
+                    val ref2 = dbref.getReference("Category/" + (counter + 1) + "/CategoryName")
+                    ref2.setValue("")
+                    val ref3 = dbref.getReference("Category/" + (counter + 1) + "/Description")
+                    ref3.setValue("")
+                }
+            }
+
+            for (i in 0 until MainActivity.arrTimeSheet.size)
+            {
+                if (MainActivity.userList[MainActivity.SignedIn].username.equals(MainActivity.arrTimeSheet[i].username))
+                {
+                    counter = i
+
+                    val ref = dbref.getReference("Timesheet/" + (counter + 1) + "/Username")
+                    ref.setValue("")
+                    val ref2 = dbref.getReference("Timesheet/" + (counter + 1) + "/TimesheetName")
+                    ref2.setValue("")
+                    val ref3 = dbref.getReference("Timesheet/" + (counter + 1) + "/Category")
+                    ref3.setValue("")
+                    val ref4 = dbref.getReference("Timesheet/" + (counter + 1) + "/Date")
+                    ref4.setValue("")
+                    val ref5 = dbref.getReference("Timesheet/" + (counter + 1) + "/StartTime")
+                    ref5.setValue("")
+                    val ref6 = dbref.getReference("Timesheet/" + (counter + 1) + "/EndTime")
+                    ref6.setValue("")
+                    val ref7 = dbref.getReference("Timesheet/" + (counter + 1) + "/TotalTime")
+                    ref7.setValue("")
+                    val ref8 = dbref.getReference("Timesheet/" + (counter + 1) + "/Description")
+                    ref8.setValue("")
+                    val ref9 = dbref.getReference("Timesheet/" + (counter + 1) + "/Image")
+                    ref9.setValue("")
+                }
+            }
 
             Toast.makeText(this, "Profile deleted", Toast.LENGTH_SHORT).show()
             val int = Intent(this, MainActivity::class.java)

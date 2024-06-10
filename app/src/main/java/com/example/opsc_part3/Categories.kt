@@ -109,15 +109,10 @@ class Categories : AppCompatActivity() {
                         ref3.setValue(catDesc.text.toString())
 
                         Toast.makeText(this, "Category successfully added.", Toast.LENGTH_SHORT).show()
-                        /*val int = Intent(this, Home::class.java)
-                        startActivity(int)*/
+                        val int = Intent(this, Home::class.java)
+                        startActivity(int)
                     }
                 }
-
-                /*val updateDataset = MainActivity.arrCategoryData.filter {
-                    it.username == username
-                  }
-                adapter.updateData(updateDataset)*/
 
                 catName.setText("")
                 catDesc.setText("")
