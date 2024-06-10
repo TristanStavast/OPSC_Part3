@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -27,6 +28,7 @@ class Timer : AppCompatActivity() {
     private var seconds = 0
     private var running = false
     private var wasRunning = false
+    private var counter: Int = 0
 
     companion object {
         val dbTimer = Firebase.database
@@ -144,21 +146,12 @@ class Timer : AppCompatActivity() {
             }
         }
 
-        val name : AutoCompleteTextView = findViewById(R.id.cmbTsNames)
-        val adapter2 = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items2)
-        name.setAdapter(adapter2)
-
-        name.inputType = 0
-        name.setOnClickListener()
-        {
-            name.showDropDown()
-        }
-
 
         // Main Code
         val btnaddtimes : Button = findViewById(R.id.btnAddTimes)
         btnaddtimes.setOnClickListener()
         {
+            val name : EditText = findViewById(R.id.txtTsName)
             val desc : EditText = findViewById(R.id.txtTimeDescription)
             var txtStopWatch : TextView = findViewById(R.id.txtStopwatch)
             val isTimesheetExists = CheckIfExists.isTimesheetExists(MainActivity.userList[MainActivity.SignedIn].username, name.text.toString(), MainActivity.arrTimeSheet)
@@ -171,7 +164,40 @@ class Timer : AppCompatActivity() {
             }
             else if (isTimesheetExists)
             {
-                name.error = "Timesheet name already exists."
+                for (i in 0 until MainActivity.arrTimeSheet.size)
+                {
+                    if ((MainActivity.userList[MainActivity.SignedIn].username.equals(MainActivity.arrTimeSheet[i].username)) &&
+                        (name.text.toString().equals(MainActivity.arrTimeSheet[i].tsName)))
+                    {
+                        counter = i
+                    }
+                }
+
+                // Update Timesheet entry
+                val ref = dbTimer.getReference("Timesheet/" + (counter+1) + "/Username")
+                ref.setValue(MainActivity.userList[MainActivity.SignedIn].username)
+                val ref2 = dbTimer.getReference("Timesheet/" + (counter+1) + "/TimesheetName")
+                ref2.setValue(name.text.toString())
+                val ref3 = dbTimer.getReference("Timesheet/" + (counter+1) + "/Category")
+                ref3.setValue(cat.text.toString())
+                val ref4 = dbTimer.getReference("Timesheet/" + (counter+1) + "/Date")
+                ref4.setValue(getTodaysDate())
+                val ref5 = dbTimer.getReference("Timesheet/" + (counter+1) + "/StartTime")
+                ref5.setValue("")
+                val ref6 = dbTimer.getReference("Timesheet/" + (counter+1) + "/EndTime")
+                ref6.setValue("")
+
+                val ref7 = dbTimer.getReference("Timesheet/" + (counter+1) + "/TotalTime")
+                ref7.setValue(addTimeStrings(MainActivity.arrTimeSheet[counter].totalTime, txtStopWatch.text.toString()))
+
+                val ref8 = dbTimer.getReference("Timesheet/" + (counter+1) + "/Description")
+                ref8.setValue(desc.text.toString())
+                val ref9 = dbTimer.getReference("Timesheet/" + (counter+1) + "/Image")
+                ref9.setValue("")
+
+                Toast.makeText(this, "Successfully modified timesheet data", Toast.LENGTH_SHORT).show()
+                val int = Intent(this, TimesheetList::class.java)
+                startActivity(int)
             }
             else
             {
@@ -275,6 +301,40 @@ class Timer : AppCompatActivity() {
         formattedTime.append("m")
 
         return formattedTime.toString()
+    }
+
+    fun addTimeStrings(time1: String?, time2: String?): String {
+        fun parseHourMinuteString(time: String?): Int {
+            if (time == null) return 0
+            val regex = "(\\d+)h(\\d+)m".toRegex()
+            val matchResult = regex.matchEntire(time)
+            return if (matchResult != null) {
+                val (hours, minutes) = matchResult.destructured
+                hours.toInt() * 60 + minutes.toInt()
+            } else {
+                0
+            }
+        }
+
+        fun parseColonTimeString(time: String?): Int {
+            if (time == null) return 0
+            val parts = time.split(":").map { it.toInt() }
+            return if (parts.size == 3) {
+                parts[0] * 60 + parts[1] + parts[2] / 60
+            } else {
+                0
+            }
+        }
+
+        val totalMinutes1 = parseHourMinuteString(time1)
+        val totalMinutes2 = parseColonTimeString(time2)
+
+        val newTotalMinutes = totalMinutes1 + totalMinutes2
+
+        val hours = newTotalMinutes / 60
+        val minutes = newTotalMinutes % 60
+
+        return "${hours}h${if (minutes < 10) "0" else ""}${minutes}m"
     }
 
 }
