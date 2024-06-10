@@ -23,10 +23,12 @@ import com.google.firebase.database.getValue
 
 class MainActivity : AppCompatActivity() {
 
+    //private database variables
     private lateinit var ref1: DatabaseReference
     private lateinit var ref2: DatabaseReference
     private lateinit var ref3: DatabaseReference
 
+    //declaring values
     companion object
     {
         val userList = mutableListOf<Users>()
@@ -50,20 +52,19 @@ class MainActivity : AppCompatActivity() {
 
         SignedIn = -1
 
+        //fetching information from database
         ref1 = FirebaseDatabase.getInstance().getReference("Users")
         ref2 = FirebaseDatabase.getInstance().getReference("Timesheet")
         ref3 = FirebaseDatabase.getInstance().getReference("Category")
         readDataFromFirebase()
 
-
         // Main Code
-
         var btnlogin : Button = findViewById(R.id.btnLogin)
         var btnreg : Button = findViewById(R.id.btnRegister)
 
         btnlogin.setOnClickListener()
         {
-
+            //variables for login
             var username : EditText = findViewById(R.id.txtUsername)
             var password : EditText = findViewById(R.id.txtPassword)
 
@@ -75,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                 if((username.text.toString().equals(userList[i].username)) && (password.text.toString().equals(
                         userList[i].password)))
                 {
+                    //logging in the user
                     Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_SHORT).show()
 
                     found = true
@@ -85,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                     break
                 }
             }
+            //error handling
             if(found == false)
             {
                 username.error = "Please enter valid username!"
@@ -93,6 +96,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        //intent to register
         btnreg.setOnClickListener()
         {
             val int = Intent(this, Register::class.java)
@@ -101,6 +105,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //reading data from the database
+    //fetching user data
     private fun readDataFromFirebase() {
         ref1.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -119,10 +125,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                //
+
             }
         })
 
+        //fetching timesheet data
         ref2.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 arrTimeSheet.clear()
@@ -149,6 +156,7 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+        //fetching category data
         ref3.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 arrCategoryData.clear()

@@ -27,12 +27,14 @@ import java.io.InputStream
 
 class EditTimesheet : AppCompatActivity() {
 
+    //creating private variables
     lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btnImage: ImageButton
     private val PICK_IMAGE = 1
     private var imgString: String? = ""
     private var counter: Int = 0
 
+    //importing database
     companion object
     {
         val dbET = Firebase.database
@@ -49,6 +51,7 @@ class EditTimesheet : AppCompatActivity() {
 
         setContentView(R.layout.activity_edit_timesheet)
 
+        //creating local variables
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
 
@@ -60,7 +63,7 @@ class EditTimesheet : AppCompatActivity() {
             }
         }
 
-        //Intents
+        //Intents for navigation bar
         navView.setNavigationItemSelectedListener {
             val timeint = Intent(this, TimesheetList::class.java)
             val homeint = Intent(this, Home::class.java)
@@ -108,7 +111,7 @@ class EditTimesheet : AppCompatActivity() {
             cat.showDropDown()
         }
 
-
+        //declaring variables
         var tsname : EditText = findViewById(R.id.txtTsName)
         var tsdesc : EditText = findViewById(R.id.txtTsDescription)
         var tsdate : EditText = findViewById(R.id.txtTsDate)
@@ -119,12 +122,14 @@ class EditTimesheet : AppCompatActivity() {
         {
             if ((ts.username.equals(MainActivity.userList[MainActivity.SignedIn].username)) && (ts.tsName.equals(Home.entry)))
             {
+                //auto filling text
                 tsname.setText(ts.tsName)
                 tsdesc.setText(ts.description)
                 tsdate.setText(ts.date)
                 tstotaltime.setText(ts.totalTime)
                 cat.setText(ts.tsCategory)
 
+                //setting the image
                 if (ts.image != null)
                 {
                     imgString = ts.image
@@ -145,12 +150,14 @@ class EditTimesheet : AppCompatActivity() {
             }
         }
 
+        //intent for image selection
         btnImage.setOnClickListener()
         {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, PICK_IMAGE)
         }
 
+        //button to save any changes made
         var saveChanges : Button = findViewById(R.id.btnTsSaveChanges)
         saveChanges.setOnClickListener()
         {
@@ -171,6 +178,7 @@ class EditTimesheet : AppCompatActivity() {
                 }
             }
 
+            //setting the new values in the database
             if (save == true)
             {
                 val ref = dbET.getReference("Timesheet/" + (counter+1) + "/Username")
@@ -193,7 +201,7 @@ class EditTimesheet : AppCompatActivity() {
 
         }
 
-
+        //deleting values from the database
         var deleteEntry : Button = findViewById(R.id.btnDeleteEntry)
         deleteEntry.setOnClickListener()
         {
@@ -223,6 +231,7 @@ class EditTimesheet : AppCompatActivity() {
 
     }
 
+    //decoding image
     private fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {
         return try {
             val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)

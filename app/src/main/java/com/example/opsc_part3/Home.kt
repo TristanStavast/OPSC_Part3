@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class Home : AppCompatActivity() {
+    //navigation drawer variable
     lateinit var toggle: ActionBarDrawerToggle
-
     companion object{
         var entry: String? = ""
     }
@@ -42,9 +42,11 @@ class Home : AppCompatActivity() {
 
         setContentView(R.layout.activity_home)
 
+        //declaring values
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
 
+        //setting navigation drawer to open on button press
         val openDrawer : ImageButton = findViewById(R.id.btnNav)
         openDrawer.setOnClickListener()
         {
@@ -53,7 +55,7 @@ class Home : AppCompatActivity() {
             }
         }
 
-        //Intents
+        //Intents for navigation drawer
         navView.setNavigationItemSelectedListener {
             val timeint = Intent(this, TimesheetList::class.java)
             val logout = Intent(this, MainActivity::class.java)
@@ -93,15 +95,14 @@ class Home : AppCompatActivity() {
         val adapter2 = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
         cat.setAdapter(adapter2)
 
+        //dropdown for category selection
         cat.inputType = 0
         cat.setOnClickListener()
         {
             cat.showDropDown()
         }
 
-
         // Main Code
-
         var txtCounter : TextView = findViewById(R.id.txtNumTime)
         var counter = 0
         for (ts in MainActivity.arrTimeSheet)
@@ -113,6 +114,7 @@ class Home : AppCompatActivity() {
         }
         txtCounter.setText("Number of timesheets added: " + counter.toString())
 
+        //local values
         val rvDash: RecyclerView = findViewById(R.id.rvDashboard)
         val username = MainActivity.userList[MainActivity.SignedIn].username
         val filteredTimesheets = MainActivity.arrTimeSheet.filter { it.username == username }
@@ -124,6 +126,7 @@ class Home : AppCompatActivity() {
         var imgUser : ImageView = findViewById(R.id.imgUserImage)
         for (user in MainActivity.userList)
         {
+            //displaying name and image on dashboard
             if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
             {
                 lblUN.text = user.username
@@ -136,12 +139,14 @@ class Home : AppCompatActivity() {
             }
         }
 
+        //intent to profile
         imgUser.setOnClickListener()
         {
             val int = Intent(this, Profile::class.java)
             startActivity(int)
         }
 
+        //intent to timer
         var clock : ImageButton = findViewById(R.id.btnClock)
         clock.setOnClickListener()
         {
@@ -149,6 +154,7 @@ class Home : AppCompatActivity() {
             startActivity(clockint)
         }
 
+        //intent to edit selected entry
         var editEntry : Button = findViewById(R.id.btnDashEdit)
         editEntry.setOnClickListener()
         {
@@ -173,6 +179,7 @@ class Home : AppCompatActivity() {
         return true
     }
 
+    //decoding image
     private fun decodeBase64ToBitmap(base64Str: String?): Bitmap? {
         return try {
             val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)

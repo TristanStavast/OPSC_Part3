@@ -20,9 +20,11 @@ import com.google.firebase.database.database
 
 class Categories : AppCompatActivity() {
 
+    //Importing database
     companion object {
         val dbCat = Firebase.database
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -32,6 +34,7 @@ class Categories : AppCompatActivity() {
 
         setContentView(R.layout.activity_categories)
 
+        //creating local variables
         val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = findViewById(R.id.nav_view)
 
@@ -43,7 +46,7 @@ class Categories : AppCompatActivity() {
             }
         }
 
-        //Intents
+        //Intents for navigation bar
         navView.setNavigationItemSelectedListener {
             val timeint = Intent(this, TimesheetList::class.java)
             val homeint = Intent(this, Home::class.java)
@@ -73,7 +76,7 @@ class Categories : AppCompatActivity() {
         val adapter = CategoryAdapter(this, filteredCategories)
         rv.adapter = adapter
 
-
+        //adding categories using a button
         var btnAdd : Button = findViewById(R.id.btnAddCategory)
         btnAdd.setOnClickListener()
         {
@@ -81,6 +84,7 @@ class Categories : AppCompatActivity() {
             var catDesc : EditText = findViewById(R.id.txtCategoryDescription)
             val isCategoryExists = CheckIfExists.isCategoryExists(MainActivity.userList[MainActivity.SignedIn].username,catName.text.toString(), MainActivity.arrCategoryData)
 
+            //error handling
             if ((catName.text.toString().equals("")) || (catDesc.text.toString().equals("")))
             {
                 catName.error= "Please enter all fields."
@@ -94,6 +98,7 @@ class Categories : AppCompatActivity() {
             {
                 for (user in MainActivity.userList)
                 {
+                    //adding to the database
                     if (user.username.equals(MainActivity.userList[MainActivity.SignedIn].username))
                     {
                         val ref = dbCat.getReference("Category/" + (MainActivity.arrCategoryData.size + 1) + "/Username")
