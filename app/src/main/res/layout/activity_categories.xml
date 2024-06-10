@@ -21,8 +21,8 @@
             android:layout_marginTop="43dp"
             android:layout_marginEnd="330dp"
             android:layout_marginBottom="635dp"
-            android:scaleType="fitCenter"
             android:background="@drawable/rounded_corner"
+            android:scaleType="fitCenter"
             android:src="@drawable/baseline_apps_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,6 @@
 
         <Button
             android:id="@+id/btnAddCategory"
-            android:textSize="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="138dp"
@@ -105,6 +104,7 @@
             android:backgroundTint="#3C9A14"
             android:text="Add Category"
             android:textColor="@color/black"
+            android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,11 +112,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategories"
-            android:layout_width="412dp"
-            android:layout_height="387dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="343dp"
-            android:layout_marginBottom="1dp"
+            android:layout_width="374dp"
+            android:layout_height="376dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="339dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

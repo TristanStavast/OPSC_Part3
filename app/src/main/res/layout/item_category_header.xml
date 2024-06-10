@@ -14,7 +14,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/headerCategoryDescription"
@@ -25,5 +25,5 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/black" />
 </LinearLayout>
