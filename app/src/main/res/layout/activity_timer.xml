@@ -138,28 +138,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/txtAddTimeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="87dp"
-            android:layout_marginTop="373dp"
-            android:layout_marginEnd="88dp"
-            android:layout_marginBottom="331dp"
-            android:background="@drawable/rounded_corner"
-            android:ems="10"
-            android:hint="Name"
-            android:inputType="text"
-            android:paddingLeft="12dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textColorHint="#65FFFFFF"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
             android:id="@+id/txtTimeDescription"
             android:layout_width="235dp"
             android:layout_height="94dp"
@@ -202,9 +180,30 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="87dp"
+            android:layout_marginTop="354dp"
+            android:layout_marginEnd="136dp"
+            android:layout_marginBottom="358dp"
             android:text="Create New or Select Existing:"
-            tools:layout_editor_absoluteX="87dp"
-            tools:layout_editor_absoluteY="354dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <AutoCompleteTextView
+            android:id="@+id/cmbTsNames"
+            android:layout_width="236dp"
+            android:layout_height="33dp"
+            android:background="@drawable/rounded_corner"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="New/Existing Name"
+            android:inputType="none"
+            android:paddingLeft="12dp"
+            android:textColor="@color/black"
+            android:textColorHint="#65FFFFFF"
+            tools:layout_editor_absoluteX="88dp"
+            tools:layout_editor_absoluteY="373dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
